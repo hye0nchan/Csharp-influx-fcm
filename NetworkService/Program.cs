@@ -64,9 +64,12 @@ namespace NetService
                             case 100:
                                 await responseStream.WriteAsync(response);
                                 break;
+                            case 200:
+                                ExchangeService.RxLink(ref response);
+                                break;
                         }
                         await responseStream.WriteAsync(response); // Server to Client
-                        ExchangeService.RxLink(ref response);
+                        
                     }
                     ExchangeService.RxLink(ref response);
 

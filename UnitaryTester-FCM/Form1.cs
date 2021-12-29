@@ -23,6 +23,7 @@ namespace WFormsUserApp
         float[] fcmArray = new float[51];
         string[] fcmStringArray = new string[51];
         string fcmMessage = "";
+        int count = 0;
 
         Timer tem1Timer = new Timer();
         Timer tem2Timer = new Timer();
@@ -275,7 +276,7 @@ namespace WFormsUserApp
                 Debug.WriteLine(fcmArray[i]);
             }
 
-            /*
+            
             for (int i = 0; i < fcmArray.Length; i++)
             {
                 switch (i)
@@ -307,10 +308,15 @@ namespace WFormsUserApp
                         }
                         break;
                 }
-            
+                if (fcmMessage.Contains(fcmStringArray[i]))
+                {
+                    //listbox에 추가
+                }
+
+
             }
             sendFCM(fcmMessage, count);
-            */
+            
             sendFCM("test", 25);
 
         }
@@ -332,17 +338,6 @@ namespace WFormsUserApp
 
             //FCM 전송
             _ = await FirebaseMessaging.DefaultInstance.SendMulticastAsync(message);
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

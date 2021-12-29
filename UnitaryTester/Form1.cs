@@ -889,12 +889,12 @@ namespace WFormsUserApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            timer1.Interval = Convert.ToInt32(textBox1.Text);
+            timer1.Interval = (Convert.ToInt32(textBox1.Text)) * 1000;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            timer2.Interval = Convert.ToInt32(textBox2.Text);
+            timer2.Interval = (Convert.ToInt32(textBox2.Text)) * 1000;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -902,17 +902,29 @@ namespace WFormsUserApp
             timer3.Interval = (Convert.ToInt32(textBox3.Text))*1000;
         }
 
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            
+            if (!(char.IsDigit(e.KeyChar)|| e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = true;
+            }
         }
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
         {
-           
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = true;
+            }
         }
 
-        
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
+            {
+                e.Handled = true;
+            }
+        }
+
     }
 }
