@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>WFormsUserApp</AssemblyName>
+    <RootNamespace>WFormsUserApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="hometestproject-f01e6-firebase-adminsdk-z0oga-3d3578f7d5.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="hometestproject-f01e6-firebase-adminsdk-z0oga-3d3578f7d5.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FirebaseAdmin" Version="2.2.0" />
+    <PackageReference Include="Google.Cloud.Firestore" Version="2.4.0" />
+    <PackageReference Include="Google.Protobuf" Version="3.18.1" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.41.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="InfluxDB.Client" Version="3.2.0" />
+  </ItemGroup>
+
+</Project>
