@@ -18,7 +18,7 @@ namespace WFormsUserApp
         List<string> registrationTokens = new List<string>()
         {
         };
-        int valueCount = 0;
+        int timerInterval = 600000;
 
         float[] fcmArray = new float[51];
         string[] fcmStringArray = new string[51];
@@ -90,7 +90,7 @@ namespace WFormsUserApp
 
             //FCM 초기화 및 타이머 설정 (10분), 600000
             FCM_Timer.Start();
-            FCM_Timer.Interval = 10000;
+            FCM_Timer.Interval = timerInterval;
         }
 
         void test()
@@ -203,7 +203,7 @@ namespace WFormsUserApp
                 });
                 fcmArray[i] = value;
                 fcmStringArray[i] = measurement;
-                sendFCM(measurement, value);
+                sendFCM(measurement,value);
 
             }
 
@@ -311,7 +311,7 @@ namespace WFormsUserApp
             }
             sendFCM(fcmMessage, count);
             */
-            //sendFCM("test", 25);
+            sendFCM("test", 25);
 
         }
 
@@ -336,6 +336,11 @@ namespace WFormsUserApp
         }
 
         private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

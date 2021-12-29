@@ -19,6 +19,9 @@ namespace WFormsUserApp
         internal static AsyncDuplexStreamingCall<ExtMessage, ExtMessage> extLink = exchange.MessageExt();
         internal static AsyncDuplexStreamingCall<CmdMessage, CmdMessage> cmdLink = exchange.MessageCmd();
         bool rtuMessageOn = true;
+        int timer1Interval = 180000;
+        int timer2Interval = 180000;
+        int timer3Interval = 180000;
         internal Form1()
         {
             InitializeComponent();
@@ -144,13 +147,13 @@ namespace WFormsUserApp
 
 
             timer1.Enabled = true;
-            timer1.Interval = 60000;
+            timer1.Interval = timer1Interval;
             Thread.Sleep(5000);
             timer2.Enabled = true;
-            timer2.Interval = 60000;
+            timer2.Interval = timer2Interval;
             Thread.Sleep(5000);
             timer3.Enabled = true;
-            timer3.Interval = 60000;
+            timer3.Interval = timer3Interval;
 
         }
 
@@ -878,5 +881,38 @@ namespace WFormsUserApp
                 DataUnit = ByteString.CopyFrom(data[0..data.Length])
             });
         }
+
+        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = Convert.ToInt32(textBox1.Text);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            timer2.Interval = Convert.ToInt32(textBox2.Text);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            timer3.Interval = (Convert.ToInt32(textBox3.Text))*1000;
+        }
+
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        
     }
 }
