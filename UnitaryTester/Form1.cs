@@ -13,11 +13,13 @@ namespace WFormsUserApp
 {
     internal partial class Form1 : Form
     {
-        private static GrpcChannel channel = GrpcChannel.ForAddress("http://172.28.224.1:5054");
+        private static GrpcChannel channel = GrpcChannel.ForAddress("http://172.20.2.70:5054");
         internal static ExProto.ExProtoClient exchange = new ExProto.ExProtoClient(channel);
         internal static AsyncDuplexStreamingCall<RtuMessage, RtuMessage> rtuLink = exchange.MessageRtu();
         internal static AsyncDuplexStreamingCall<ExtMessage, ExtMessage> extLink = exchange.MessageExt();
         internal static AsyncDuplexStreamingCall<CmdMessage, CmdMessage> cmdLink = exchange.MessageCmd();
+        internal static AsyncDuplexStreamingCall<RtuMessage, RtuMessage> influxLink = exchange.influxDB();
+
         bool rtuMessageOn = true;
         int timer1Interval = 180000;
         int timer2Interval = 180000;
@@ -32,6 +34,52 @@ namespace WFormsUserApp
         {
             rtuMessageOn = true;
         }
+
+        private async void InfluxService()
+        {
+            try
+            {
+                while (await influxLink.ResponseStream.MoveNext(cancellationToken: CancellationToken.None))
+                {
+                    if (rtuMessageOn)
+                    {
+                        var response = rtuLink.ResponseStream.Current;
+
+                        byte protocol = (byte)response.Channel;
+
+                        UInt16 clientId = (UInt16)(response.Channel >> 8);
+                        this.Invoke((MethodInvoker)delegate ()
+                        {
+                            richTextBox2.Text = "RxRtu(" + GetProtocolChannelName(protocol) + ")";
+                            richTextBox2.AppendText(Environment.NewLine + $"Client ID={clientId}");
+                        });
+
+                        switch (protocol)
+                        {
+                            case 100:
+                                /* Modbus protocol */
+                                byte[] payload = new byte[response.DataUnit.Length];
+                                response.DataUnit.CopyTo(payload, 0);
+                                RxRtu((UInt16)response.SequenceNumber, response.GwId, response.DeviceId, payload);
+                                break;
+                            default:
+                                /* Unknown protocol */
+                                break;
+                        }
+                        rtuMessageOn = false;
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                Application.Exit();
+            }
+        }
+
         private async void RtuMessageService()
         {
             try

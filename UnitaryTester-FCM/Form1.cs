@@ -308,10 +308,12 @@ namespace WFormsUserApp
                         }
                         break;
                 }
+                /*
                 if (fcmMessage.Contains(fcmStringArray[i]))
                 {
                     //listbox에 추가
                 }
+                */
 
 
             }
@@ -338,6 +340,15 @@ namespace WFormsUserApp
 
             //FCM 전송
             _ = await FirebaseMessaging.DefaultInstance.SendMulticastAsync(message);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Invoke((MethodInvoker)delegate ()
+            {
+                FCM_Timer.Interval = Convert.ToInt32(textBox1.Text);
+
+            });
         }
     }
 }

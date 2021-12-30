@@ -23,6 +23,9 @@ service ExProto {
   rpc MessageRtu (stream RtuMessage) returns (stream RtuMessage);
   rpc MessageExt (stream ExtMessage) returns (stream ExtMessage);
   rpc MessageCmd (stream CmdMessage) returns (stream CmdMessage);
+
+  rpc influxDB (stream RtuMessage) returns (stream RtuMessage);
+;
 }
 
 // Remote Terminal Unit streaming for Modbus Master

@@ -54,7 +54,8 @@ namespace NetService
                 {
                     RtuMessage response = rtuLink.ResponseStream.Current; // From Server
                     IServerStreamWriter<RtuMessage> responseStream = ExchangeService.responseStreamRtu;
-                    IServerStreamWriter<RtuMessage> responseStream_influxDB = ExchangeService.responseStreamRtu;
+                    
+                    IServerStreamWriter<RtuMessage> responseStream_influxDB = ExchangeService.responseStreamInflux;
                     var protocol = (byte)response.Channel;
                     Debug.WriteLine(protocol);
                     if (responseStream != null)
@@ -62,6 +63,7 @@ namespace NetService
                         switch (protocol)
                         {
                             case 100:
+                                //await responseStream_influxDB.WriteAsync(response);
                                 await responseStream.WriteAsync(response);
                                 break;
                             case 200:

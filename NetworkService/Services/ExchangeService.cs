@@ -33,6 +33,7 @@ namespace NetService
         internal static IServerStreamWriter<ExtMessage> responseStreamExt = null;
         internal static IServerStreamWriter<CmdMessage> responseStreamCmd = null;
         internal static IServerStreamWriter<RtuMessage> responseStream = null;
+        internal static IServerStreamWriter<RtuMessage> responseStreamInflux = null;
 
         public ExchangeService(ILoggerFactory loggerFactory)
         {
@@ -40,6 +41,19 @@ namespace NetService
             _logger.LogInformation($"Exchange Service Protocol Starts");
         }
 
+
+        public override async Task influxDB(IAsyncStreamReader<RtuMessage> requestStream, IServerStreamWriter<RtuMessage> responseStream, ServerCallContext context)
+        {
+            ExchangeService.responseStreamRtu = responseStream;
+
+            while (await requestStream.MoveNext())
+            {
+                RtuMessage request = requestStream.Current; // From Client
+                await Program.rtuLink.RequestStream.WriteAsync(request); // Client to Server
+            }
+
+            ExchangeService.responseStreamRtu = null;
+        }
         public override Task ExServerstream(RtuMessage request, IServerStreamWriter<RtuMessage> responseStream, ServerCallContext context)
         {
 
