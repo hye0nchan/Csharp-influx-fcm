@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "157889043829",
+    "project_id": "hometestproject-f01e6",
+    "storage_bucket": "hometestproject-f01e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157889043829:android:a516f08c691368f7c0473c",
+        "android_client_info": {
+          "package_name": "com.example.smartfarm_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157889043829-pvcjmj15hsp46rgmaopovmuf70idfuum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzYDZy41UNEC-qKEj9o0ebtDB8n9htI34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157889043829-pvcjmj15hsp46rgmaopovmuf70idfuum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

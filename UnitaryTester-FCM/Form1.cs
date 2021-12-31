@@ -288,11 +288,16 @@ namespace WFormsUserApp
                         {
                             switch (i)
                             {
+                                //timer 기본 루프
                                 case 0:
                                     if (tem1Timer.Enabled)
                                     {
-                                        fcmStringArray[i] = "tem_1";
+                                        tem1Timer.Stop();
+                                        fcmStringArray[i] = measurement;
                                     }
+                                    tem1Timer.Start();
+                                    tem1Timer.Interval = timerInterval;
+                                    fcmStringArray[i] = "tem_1";
                                     tem1Timer.Interval = 180000;
                                     tem1Timer.Start();
                                     break;
@@ -317,7 +322,7 @@ namespace WFormsUserApp
 
 
             }
-            sendFCM(fcmMessage, count);
+            //sendFCM(fcmMessage, count);
             
             sendFCM("test", 25);
 

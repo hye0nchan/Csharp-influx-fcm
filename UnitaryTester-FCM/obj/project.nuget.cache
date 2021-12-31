@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9LHNEC559VntfSYg9jQS8OhwaTeyBlOevyChzDsb/XtnZZtsDRsVviv5Myre+Z2eFuetjLd5W2MdJ5+pjxyNZQ==",
+  "dgSpecHash": "opWwLuE480uubsnxdJYdJ2Y53vHZcugmsW06Th5e8iNpbAMGTR6LXAhyNHdYOdcCVTRjfzg282zw2qdpLQb9XQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\C#FCM\\UnitaryTester-FCM\\UnitaryTester-FCM.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\Csharp-influx-fcm\\UnitaryTester-FCM\\UnitaryTester-FCM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\csvhelper\\27.1.0\\csvhelper.27.1.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\firebaseadmin\\2.2.0\\firebaseadmin.2.2.0.nupkg.sha512",

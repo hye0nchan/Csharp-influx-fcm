@@ -31,12 +31,14 @@ namespace NetExchange {
             "Z3dfaWQYAiABKA0SEQoJZGV2aWNlX2lkGAMgASgEEhEKCWRhdGFfdW5pdBgE",
             "IAEoDCJxCgpDbWRNZXNzYWdlEg8KB29wX2NvZGUYASABKA0SDQoFcm91dGUY",
             "AiABKA0SEAoIYXJndW1lbnQYAyABKA0SDQoFZ3dfaWQYBCABKA0SEQoJZGV2",
-            "aWNlX2lkGAUgASgEEg8KB3BheWxvYWQYBiABKAwy2wEKB0V4UHJvdG8SRAoK",
+            "aWNlX2lkGAUgASgEEg8KB3BheWxvYWQYBiABKAwynwIKB0V4UHJvdG8SRAoK",
             "TWVzc2FnZVJ0dRIYLm5ldF9leGNoYW5nZS5SdHVNZXNzYWdlGhgubmV0X2V4",
             "Y2hhbmdlLlJ0dU1lc3NhZ2UoATABEkQKCk1lc3NhZ2VFeHQSGC5uZXRfZXhj",
             "aGFuZ2UuRXh0TWVzc2FnZRoYLm5ldF9leGNoYW5nZS5FeHRNZXNzYWdlKAEw",
             "ARJECgpNZXNzYWdlQ21kEhgubmV0X2V4Y2hhbmdlLkNtZE1lc3NhZ2UaGC5u",
-            "ZXRfZXhjaGFuZ2UuQ21kTWVzc2FnZSgBMAFiBnByb3RvMw=="));
+            "ZXRfZXhjaGFuZ2UuQ21kTWVzc2FnZSgBMAESQgoIaW5mbHV4REISGC5uZXRf",
+            "ZXhjaGFuZ2UuUnR1TWVzc2FnZRoYLm5ldF9leGNoYW5nZS5SdHVNZXNzYWdl",
+            "KAEwAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

@@ -94,6 +94,14 @@ namespace NetExchange {
         __Marshaller_net_exchange_CmdMessage,
         __Marshaller_net_exchange_CmdMessage);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::NetExchange.RtuMessage, global::NetExchange.RtuMessage> __Method_influxDB = new grpc::Method<global::NetExchange.RtuMessage, global::NetExchange.RtuMessage>(
+        grpc::MethodType.DuplexStreaming,
+        __ServiceName,
+        "influxDB",
+        __Marshaller_net_exchange_RtuMessage,
+        __Marshaller_net_exchange_RtuMessage);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -156,6 +164,16 @@ namespace NetExchange {
       public virtual grpc::AsyncDuplexStreamingCall<global::NetExchange.CmdMessage, global::NetExchange.CmdMessage> MessageCmd(grpc::CallOptions options)
       {
         return CallInvoker.AsyncDuplexStreamingCall(__Method_MessageCmd, null, options);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncDuplexStreamingCall<global::NetExchange.RtuMessage, global::NetExchange.RtuMessage> influxDB(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return influxDB(new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncDuplexStreamingCall<global::NetExchange.RtuMessage, global::NetExchange.RtuMessage> influxDB(grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncDuplexStreamingCall(__Method_influxDB, null, options);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]

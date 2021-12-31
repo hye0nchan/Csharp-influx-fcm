@@ -57,7 +57,7 @@ namespace NetService
                     
                     IServerStreamWriter<RtuMessage> responseStream_influxDB = ExchangeService.responseStreamInflux;
                     var protocol = (byte)response.Channel;
-                    Debug.WriteLine(protocol);
+                    Debug.WriteLine(response.DataUnit);
                     if (responseStream != null)
                     {
                         switch (protocol)

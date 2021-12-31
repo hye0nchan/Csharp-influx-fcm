@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0SS/gqlkPSjy3xlY9VeRoUo3QNVK92GFEFMn0IPClQnFq3ESFOPHM0pEHTLysJ9VuR02m7ZN/6fei9Bw1z7GuQ==",
+  "dgSpecHash": "XyqjcJg3ylJFjoPBxojVqTaMVlbeMDQOSJkUR3RpAe/qDHrpypXv+It9l2D6w56nSddkw0BkXD3lRMgatUH41Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\C#FCM\\NetworkService\\NetworkService.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\Csharp-influx-fcm\\NetworkService\\NetworkService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\google.api.commonprotos\\2.3.0\\google.api.commonprotos.2.3.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\google.api.gax\\3.3.0\\google.api.gax.3.3.0.nupkg.sha512",
