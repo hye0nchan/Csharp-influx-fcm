@@ -23,11 +23,14 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
   var grpc = Grpc();
   var functionBox = FunctionBox();
   var home = MyApp();
   var influxDB = AddInfluxDB();
+
+  TextEditingController ipInputController = TextEditingController();
 
   double temValue = 0;
   double humValue = 0;
@@ -92,6 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int coMDataCount = 0;
   int coHDataCount = 0;
 
+  void textApply(){
+
+  }
+
   void readInfluxDB() async {
     print(readCount);
     if (readCount) {
@@ -127,76 +134,76 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> refreshSensor1() async {
     timerSensor1 =
         Timer.periodic(Duration(seconds: intRecyclePeriod), (timer) async {
-      grpc.sendSensor1();
+          grpc.sendSensor1();
 
-      (isCheckedMap[0]) ? influxDB.tem1AddInfluxDB() : null;
-      (isCheckedMap[1]) ? influxDB.hum1AddInfluxDB() : null;
-      (isCheckedMap[2]) ? influxDB.co21AddInfluxDB() : null;
-      (isCheckedMap[3]) ? influxDB.lux1AddInfluxDB() : null;
-      (isCheckedMap[4]) ? influxDB.uv1AddInfluxDB() : null;
-      (isCheckedMap[5]) ? influxDB.nh31AddInfluxDB() : null;
-      (isCheckedMap[6]) ? influxDB.nh3L1AddInfluxDB() : null;
-      (isCheckedMap[7]) ? influxDB.nh3M1AddInfluxDB() : null;
-      (isCheckedMap[8]) ? influxDB.nh3H1AddInfluxDB() : null;
-      (isCheckedMap[9]) ? influxDB.no21AddInfluxDB() : null;
-      (isCheckedMap[10]) ? influxDB.no2L1AddInfluxDB() : null;
-      (isCheckedMap[11]) ? influxDB.no2M1AddInfluxDB() : null;
-      (isCheckedMap[12]) ? influxDB.no2H1AddInfluxDB() : null;
-      (isCheckedMap[13]) ? influxDB.co21AddInfluxDB() : null;
-      (isCheckedMap[14]) ? influxDB.coL1AddInfluxDB() : null;
-      (isCheckedMap[15]) ? influxDB.coM1AddInfluxDB() : null;
-      (isCheckedMap[16]) ? influxDB.coH1AddInfluxDB() : null;
-    });
+          (isCheckedMap[0]) ? influxDB.tem1AddInfluxDB() : null;
+          (isCheckedMap[1]) ? influxDB.hum1AddInfluxDB() : null;
+          (isCheckedMap[2]) ? influxDB.co21AddInfluxDB() : null;
+          (isCheckedMap[3]) ? influxDB.lux1AddInfluxDB() : null;
+          (isCheckedMap[4]) ? influxDB.uv1AddInfluxDB() : null;
+          (isCheckedMap[5]) ? influxDB.nh31AddInfluxDB() : null;
+          (isCheckedMap[6]) ? influxDB.nh3L1AddInfluxDB() : null;
+          (isCheckedMap[7]) ? influxDB.nh3M1AddInfluxDB() : null;
+          (isCheckedMap[8]) ? influxDB.nh3H1AddInfluxDB() : null;
+          (isCheckedMap[9]) ? influxDB.no21AddInfluxDB() : null;
+          (isCheckedMap[10]) ? influxDB.no2L1AddInfluxDB() : null;
+          (isCheckedMap[11]) ? influxDB.no2M1AddInfluxDB() : null;
+          (isCheckedMap[12]) ? influxDB.no2H1AddInfluxDB() : null;
+          (isCheckedMap[13]) ? influxDB.co21AddInfluxDB() : null;
+          (isCheckedMap[14]) ? influxDB.coL1AddInfluxDB() : null;
+          (isCheckedMap[15]) ? influxDB.coM1AddInfluxDB() : null;
+          (isCheckedMap[16]) ? influxDB.coH1AddInfluxDB() : null;
+        });
   }
 
   Future<void> refreshSensor2() async {
     timerSensor2 =
         Timer.periodic(Duration(seconds: intRecyclePeriod), (timer) async {
-      grpc.sendSensor2();
+          grpc.sendSensor2();
 
-      (isCheckedMap[0]) ? influxDB.tem2AddInfluxDB() : null;
-      (isCheckedMap[1]) ? influxDB.hum2AddInfluxDB() : null;
-      (isCheckedMap[2]) ? influxDB.co22AddInfluxDB() : null;
-      (isCheckedMap[3]) ? influxDB.lux2AddInfluxDB() : null;
-      (isCheckedMap[4]) ? influxDB.uv2AddInfluxDB() : null;
-      (isCheckedMap[5]) ? influxDB.nh32AddInfluxDB() : null;
-      (isCheckedMap[6]) ? influxDB.nh3L2AddInfluxDB() : null;
-      (isCheckedMap[7]) ? influxDB.nh3M2AddInfluxDB() : null;
-      (isCheckedMap[8]) ? influxDB.nh3H2AddInfluxDB() : null;
-      (isCheckedMap[9]) ? influxDB.no22AddInfluxDB() : null;
-      (isCheckedMap[10]) ? influxDB.no2L2AddInfluxDB() : null;
-      (isCheckedMap[11]) ? influxDB.no2M2AddInfluxDB() : null;
-      (isCheckedMap[12]) ? influxDB.no2H2AddInfluxDB() : null;
-      (isCheckedMap[13]) ? influxDB.co22AddInfluxDB() : null;
-      (isCheckedMap[14]) ? influxDB.coL2AddInfluxDB() : null;
-      (isCheckedMap[15]) ? influxDB.coM2AddInfluxDB() : null;
-      (isCheckedMap[16]) ? influxDB.coH2AddInfluxDB() : null;
-    });
+          (isCheckedMap[0]) ? influxDB.tem2AddInfluxDB() : null;
+          (isCheckedMap[1]) ? influxDB.hum2AddInfluxDB() : null;
+          (isCheckedMap[2]) ? influxDB.co22AddInfluxDB() : null;
+          (isCheckedMap[3]) ? influxDB.lux2AddInfluxDB() : null;
+          (isCheckedMap[4]) ? influxDB.uv2AddInfluxDB() : null;
+          (isCheckedMap[5]) ? influxDB.nh32AddInfluxDB() : null;
+          (isCheckedMap[6]) ? influxDB.nh3L2AddInfluxDB() : null;
+          (isCheckedMap[7]) ? influxDB.nh3M2AddInfluxDB() : null;
+          (isCheckedMap[8]) ? influxDB.nh3H2AddInfluxDB() : null;
+          (isCheckedMap[9]) ? influxDB.no22AddInfluxDB() : null;
+          (isCheckedMap[10]) ? influxDB.no2L2AddInfluxDB() : null;
+          (isCheckedMap[11]) ? influxDB.no2M2AddInfluxDB() : null;
+          (isCheckedMap[12]) ? influxDB.no2H2AddInfluxDB() : null;
+          (isCheckedMap[13]) ? influxDB.co22AddInfluxDB() : null;
+          (isCheckedMap[14]) ? influxDB.coL2AddInfluxDB() : null;
+          (isCheckedMap[15]) ? influxDB.coM2AddInfluxDB() : null;
+          (isCheckedMap[16]) ? influxDB.coH2AddInfluxDB() : null;
+        });
   }
 
   Future<void> refreshSensor3() async {
     timerSensor3 =
         Timer.periodic(Duration(seconds: intRecyclePeriod), (timer) async {
-      grpc.sendSensor3();
+          grpc.sendSensor3();
 
-      (isCheckedMap[0]) ? influxDB.tem3AddInfluxDB() : null;
-      (isCheckedMap[1]) ? influxDB.hum3AddInfluxDB() : null;
-      (isCheckedMap[2]) ? influxDB.co23AddInfluxDB() : null;
-      (isCheckedMap[3]) ? influxDB.lux3AddInfluxDB() : null;
-      (isCheckedMap[4]) ? influxDB.uv3AddInfluxDB() : null;
-      (isCheckedMap[5]) ? influxDB.nh33AddInfluxDB() : null;
-      (isCheckedMap[6]) ? influxDB.nh3L3AddInfluxDB() : null;
-      (isCheckedMap[7]) ? influxDB.nh3M3AddInfluxDB() : null;
-      (isCheckedMap[8]) ? influxDB.nh3H3AddInfluxDB() : null;
-      (isCheckedMap[9]) ? influxDB.no23AddInfluxDB() : null;
-      (isCheckedMap[10]) ? influxDB.no2L3AddInfluxDB() : null;
-      (isCheckedMap[11]) ? influxDB.no2M3AddInfluxDB() : null;
-      (isCheckedMap[12]) ? influxDB.no2H3AddInfluxDB() : null;
-      (isCheckedMap[13]) ? influxDB.co3AddInfluxDB() : null;
-      (isCheckedMap[14]) ? influxDB.coL3AddInfluxDB() : null;
-      (isCheckedMap[15]) ? influxDB.coM3AddInfluxDB() : null;
-      (isCheckedMap[16]) ? influxDB.coH3AddInfluxDB() : null;
-    });
+          (isCheckedMap[0]) ? influxDB.tem3AddInfluxDB() : null;
+          (isCheckedMap[1]) ? influxDB.hum3AddInfluxDB() : null;
+          (isCheckedMap[2]) ? influxDB.co23AddInfluxDB() : null;
+          (isCheckedMap[3]) ? influxDB.lux3AddInfluxDB() : null;
+          (isCheckedMap[4]) ? influxDB.uv3AddInfluxDB() : null;
+          (isCheckedMap[5]) ? influxDB.nh33AddInfluxDB() : null;
+          (isCheckedMap[6]) ? influxDB.nh3L3AddInfluxDB() : null;
+          (isCheckedMap[7]) ? influxDB.nh3M3AddInfluxDB() : null;
+          (isCheckedMap[8]) ? influxDB.nh3H3AddInfluxDB() : null;
+          (isCheckedMap[9]) ? influxDB.no23AddInfluxDB() : null;
+          (isCheckedMap[10]) ? influxDB.no2L3AddInfluxDB() : null;
+          (isCheckedMap[11]) ? influxDB.no2M3AddInfluxDB() : null;
+          (isCheckedMap[12]) ? influxDB.no2H3AddInfluxDB() : null;
+          (isCheckedMap[13]) ? influxDB.co3AddInfluxDB() : null;
+          (isCheckedMap[14]) ? influxDB.coL3AddInfluxDB() : null;
+          (isCheckedMap[15]) ? influxDB.coM3AddInfluxDB() : null;
+          (isCheckedMap[16]) ? influxDB.coH3AddInfluxDB() : null;
+        });
   }
 
   // Future<void> refreshTem() async {
@@ -245,18 +252,18 @@ class _HomeScreenState extends State<HomeScreen> {
     await client
         .getDeleteService()
         .delete(
-            predicate: '_measurement="nh3"',
-            start: DateTime.utc(1989, 11, 9),
-            stop: DateTime.now().toUtc(),
-            bucket: 'farmcare',
-            org: 'saltanb')
+        predicate: '_measurement="nh3"',
+        start: DateTime.utc(1989, 11, 9),
+        stop: DateTime.now().toUtc(),
+        bucket: 'farmcare',
+        org: 'saltanb')
         .catchError((e) => print(e));
   }
 
   @override
   void initState() {
     getToken();
-    //readInfluxDB();
+    readInfluxDB();
     hideGauge();
     super.initState();
   }
@@ -304,7 +311,6 @@ class _HomeScreenState extends State<HomeScreen> {
           .doc('device${fireStoreTokenList.length + 1}')
           .set({'value': token});
     }
-
   }
 
   //Dialog
@@ -318,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             actions: <Widget>[
               TextButton(
                 child: Text(
@@ -402,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.03,
+                                MediaQuery.of(context).size.height * 0.03,
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
@@ -434,12 +440,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.03,
+                                MediaQuery.of(context).size.height * 0.03,
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 height:
-                                    MediaQuery.of(context).size.height * 0.05,
+                                MediaQuery.of(context).size.height * 0.05,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
@@ -447,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.03,
+                                MediaQuery.of(context).size.height * 0.03,
                               ),
                               Container(
                                 margin: const EdgeInsets.symmetric(
@@ -470,20 +476,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                   value: selectedGateway,
                                   items: gatewayID
                                       .map((e) => DropdownMenuItem(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Text(
-                                                  e,
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                )
-                                              ],
-                                            ),
-                                            value: e,
-                                          ))
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          e,
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    value: e,
+                                  ))
                                       .toList(),
                                   onChanged: (value) {
                                     setState(() {
@@ -492,12 +498,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   },
                                 ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.3,
-                                decoration: BoxDecoration(
-                                    color: Palette.primaryColor,
-                                    borderRadius: BorderRadius.circular(20.0)),
                               ),
                               Container(
                                 margin: const EdgeInsets.symmetric(
@@ -526,25 +526,69 @@ class _HomeScreenState extends State<HomeScreen> {
                                   value: selectedDeviceID,
                                   items: deviceID
                                       .map((e) => DropdownMenuItem(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Text(
-                                                  e,
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white),
-                                                )
-                                              ],
-                                            ),
-                                            value: e,
-                                          ))
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text(
+                                          e,
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight:
+                                              FontWeight.bold,
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                    value: e,
+                                  ))
                                       .toList(),
                                 ),
                               ),
+                              SizedBox(
+                                height:
+                                MediaQuery.of(context).size.height * 0.03,
+                              ),
+                              SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child: TextField(
+                                        controller: ipInputController,
+                                        onChanged: (text){
+                                          setState((){
+                                          });
+                                        },
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'input ip',
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      child:
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          inputText = ipInputController.text;
+                                        },
+                                        style: ButtonStyle(
+                                            textStyle: MaterialStateProperty.all(
+                                                TextStyle(fontSize: 14, color: Colors.white)),
+                                            backgroundColor:
+                                            MaterialStateProperty.all(Colors.blue)),
+                                        child: Text("Apply"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+
                             ],
                           ),
+
                         ),
                       ),
                       Visibility(
@@ -570,8 +614,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Temperature")),
                                       Container(
@@ -587,8 +631,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Ammonia_L"))
                                     ]),
@@ -608,8 +652,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Humidity")),
                                       Container(
@@ -625,8 +669,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Ammonia_M"))
                                     ]),
@@ -646,8 +690,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Co2")),
                                       Container(
@@ -663,8 +707,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Ammonia_H"))
                                     ]),
@@ -684,13 +728,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Container(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
+                                                  .size
+                                                  .width *
                                                   0.2,
                                               child: Text("Ammonia"))),
                                       Container(
@@ -706,8 +750,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("No2_L"))
                                     ]),
@@ -727,8 +771,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Lux")),
                                       Container(
@@ -744,8 +788,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("No2_M"))
                                     ]),
@@ -765,8 +809,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Uv")),
                                       Container(
@@ -782,8 +826,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("No2_H"))
                                     ]),
@@ -803,8 +847,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("No2")),
                                       Container(
@@ -820,8 +864,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Co_L"))
                                     ]),
@@ -841,8 +885,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Co")),
                                       Container(
@@ -858,8 +902,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Co_M"))
                                     ]),
@@ -879,8 +923,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Container(
                                           width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
+                                              .size
+                                              .width *
                                               0.2,
                                           child: Text("Co_H"))
                                     ]),
@@ -891,9 +935,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                  MediaQuery.of(context).size.width * 0.3,
                                   height:
-                                      MediaQuery.of(context).size.height * 0.05,
+                                  MediaQuery.of(context).size.height * 0.05,
                                   child: RaisedButton(
                                     elevation: 0.0,
                                     color: Colors.lightBlue,
@@ -937,9 +981,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.3,
+                                  MediaQuery.of(context).size.width * 0.3,
                                   height:
-                                      MediaQuery.of(context).size.height * 0.05,
+                                  MediaQuery.of(context).size.height * 0.05,
                                   child: RaisedButton(
                                     elevation: 0.0,
                                     color: Colors.lightBlue,
@@ -987,7 +1031,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               "Open Last Data List",
                               style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
+                              TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ),
@@ -1008,16 +1052,16 @@ class _HomeScreenState extends State<HomeScreen> {
           return AlertDialog(
             title: Center(
                 child: new Text(
-              "Error",
-              style: TextStyle(fontSize: 20),
-            )),
+                  "Error",
+                  style: TextStyle(fontSize: 20),
+                )),
             content: SizedBox(
               height: 40,
               child: Center(
                   child: new Text(
-                "\nList is empty",
-                style: TextStyle(fontSize: 17),
-              )),
+                    "\nList is empty",
+                    style: TextStyle(fontSize: 17),
+                  )),
             ),
             actions: <Widget>[
               new TextButton(
@@ -1198,6 +1242,7 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: <Widget>[
           _buildHeader(screenHeight),
           _buildPreventionTips(screenHeight),
+          //_buildInputIp(screenHeight)
         ],
       ),
     );
@@ -1248,20 +1293,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         value: homeSelectedItem,
                         items: dropDownItem
                             .map((e) => DropdownMenuItem(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  value: e,
-                                ))
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                e,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                          value: e,
+                        ))
                             .toList(),
                         onChanged: (String value) {
                           setState(() {
@@ -1289,20 +1334,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         value: homeSelectedItem2,
                         items: dropDownItem2
                             .map((e) => DropdownMenuItem(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  value: e,
-                                ))
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                e,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                          value: e,
+                        ))
                             .toList(),
                         onChanged: (String value) {
                           setState(() {
@@ -1796,6 +1841,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+
           ],
         ),
       ),

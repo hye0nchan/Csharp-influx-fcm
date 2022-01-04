@@ -6,10 +6,13 @@ import 'package:smartfarm_dashboard/widgets/stats_grid.dart';
 
 ////////////////////////////////////////////////////////////////////////////////
 // influxDB
+
+var influxIp = "http://172.20.2.70:8086";
+var inputText = "test";
 var client = InfluxDBClient(
-    url: 'http://172.18.192.1:8086',
+    url: influxIp,
     token:
-        'jrGSUa8nVpoSqLvIpqebtcgXPsu3cyh6nlCWVUFHf8Sa1FsE5sVsNXXEa-3X-y4KsO0iyb8e6MICbPxOMt5dyg==',
+    'jrGSUa8nVpoSqLvIpqebtcgXPsu3cyh6nlCWVUFHf8Sa1FsE5sVsNXXEa-3X-y4KsO0iyb8e6MICbPxOMt5dyg==',
     org: 'saltanb',
     bucket: 'farmcare',
     debug: true);
