@@ -141,3 +141,4 @@ C:\Users\Administrator\Desktop\Csharp-influx-fcm\UnitaryTester\obj\Debug\net5.0-
 C:\Users\Administrator\Desktop\Csharp-influx-fcm\UnitaryTester\obj\Debug\net5.0-windows\ref\WFormsUserApp.dll
 C:\Users\Administrator\Desktop\Csharp-influx-fcm\UnitaryTester\obj\Debug\net5.0-windows\WFormsUserApp.pdb
 C:\Users\Administrator\Desktop\Csharp-influx-fcm\UnitaryTester\obj\Debug\net5.0-windows\UnitaryTester.genruntimeconfig.cache
+C:\Users\Administrator\Desktop\Csharp-influx-fcm\UnitaryTester\obj\Debug\net5.0-windows\UnitaryTester.csproj.AssemblyReference.cache

@@ -12,7 +12,7 @@ var inputText = "test";
 var client = InfluxDBClient(
     url: influxIp,
     token:
-    'jrGSUa8nVpoSqLvIpqebtcgXPsu3cyh6nlCWVUFHf8Sa1FsE5sVsNXXEa-3X-y4KsO0iyb8e6MICbPxOMt5dyg==',
+        'jrGSUa8nVpoSqLvIpqebtcgXPsu3cyh6nlCWVUFHf8Sa1FsE5sVsNXXEa-3X-y4KsO0iyb8e6MICbPxOMt5dyg==',
     org: 'saltanb',
     bucket: 'farmcare',
     debug: true);

@@ -23,7 +23,7 @@ class _StatsScreenState extends State<StatsScreen> {
   bool switchValue = false;
 
   ZoomPanBehavior _zoomPanBehavior =
-  ZoomPanBehavior(enablePinching: true, enableDoubleTapZooming: true);
+      ZoomPanBehavior(enablePinching: true, enableDoubleTapZooming: true);
 
   //센서1
 
@@ -33,8 +33,6 @@ class _StatsScreenState extends State<StatsScreen> {
     functionBox.changeVisibilityStatScreenLists(0);
     super.initState();
   }
-
-
 
   void loadingDialog() {
     showDialog(
@@ -50,9 +48,9 @@ class _StatsScreenState extends State<StatsScreen> {
             ),
             title: Center(
                 child: new Text(
-                  "Loading Data",
-                  style: TextStyle(fontSize: 20),
-                )),
+              "Loading Data",
+              style: TextStyle(fontSize: 20),
+            )),
             content: SizedBox(
               height: 60,
               child: Column(
@@ -100,10 +98,7 @@ class _StatsScreenState extends State<StatsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Palette.primaryColor,
       appBar: AppBar(
@@ -133,10 +128,7 @@ class _StatsScreenState extends State<StatsScreen> {
                 child: Column(
                   children: [
                     Container(
-                      height: MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.6,
+                      height: MediaQuery.of(context).size.height * 0.6,
                       child: Stack(
                         children: [
                           //test
@@ -166,25 +158,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "℃",
                                     dataSource: tem1ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: tem2ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: tem3ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -216,25 +208,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "%",
                                     dataSource: hum1ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "%",
                                     dataSource: hum2ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "%",
                                     dataSource: hum3ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -266,25 +258,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "ppm",
                                     dataSource: co21ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "ppm",
                                     dataSource: co22ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "ppm",
                                     dataSource: co23ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -316,25 +308,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "℃",
                                     dataSource: lux1ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: lux2ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: lux3ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -366,25 +358,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "℃",
                                     dataSource: uv1ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: uv2ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: uv3ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -416,25 +408,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "℃",
                                     dataSource: nh31ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: nh32ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: nh33ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -466,25 +458,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "℃",
                                     dataSource: no21ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: no22ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: no23ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -516,25 +508,25 @@ class _StatsScreenState extends State<StatsScreen> {
                                     name: "℃",
                                     dataSource: co1ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: co2ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                   LineSeries<ChartData, DateTime>(
                                     name: "℃",
                                     dataSource: co3ChartData,
                                     xValueMapper: (ChartData sales, _) =>
-                                    sales.time,
+                                        sales.time,
                                     yValueMapper: (ChartData sales, _) =>
-                                    sales.value,
+                                        sales.value,
                                   ),
                                 ],
                               ),
@@ -616,36 +608,36 @@ class _StatsScreenState extends State<StatsScreen> {
             tabs: <Widget>[
               Center(
                   child: Text(
-                    "T\ne\nm",
-                  )),
+                "T\ne\nm",
+              )),
               Center(
                   child: Text(
-                    "H\nu\nm",
-                  )),
+                "H\nu\nm",
+              )),
               Center(
                   child: Text(
-                    "C\nO\n2",
-                  )),
+                "C\nO\n2",
+              )),
               Center(
                   child: Text(
-                    "L\nu\nx",
-                  )),
+                "L\nu\nx",
+              )),
               Center(
                   child: Text(
-                    "U\nv",
-                  )),
+                "U\nv",
+              )),
               Center(
                   child: Text(
-                    "A\nm\nm",
-                  )),
+                "A\nm\nm",
+              )),
               Center(
                   child: Text(
-                    "N\no\n2",
-                  )),
+                "N\no\n2",
+              )),
               Center(
                   child: Text(
-                    "C\no",
-                  )),
+                "C\no",
+              )),
             ],
             onTap: (index) {
               if (index == 0) {
@@ -755,7 +747,7 @@ class _StatsScreenState extends State<StatsScreen> {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             actions: <Widget>[
               TextButton(
                 child: Text(
@@ -768,14 +760,8 @@ class _StatsScreenState extends State<StatsScreen> {
               )
             ],
             title: Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.05,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.05,
+              width: MediaQuery.of(context).size.width * 0.05,
+              height: MediaQuery.of(context).size.height * 0.05,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Palette.primaryColor,
@@ -791,46 +777,40 @@ class _StatsScreenState extends State<StatsScreen> {
               ),
             ),
             content: SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.5,
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.5,
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: Center(
                     child: Column(
-                      children: [
-                        // Container(
-                        //   width: MediaQuery.of(context).size.width * 0.4,
-                        //   child: RaisedButton(
-                        //     color: Colors.lightBlue,
-                        //     onPressed: fireStoreTest,
-                        //     child: Stack(
-                        //       children: [
-                        //         Visibility(
-                        //           visible: loadingCount,
-                        //           child: Text(
-                        //             "Connecting Server",
-                        //             style: TextStyle(color: Colors.white),
-                        //             //Timer.period
-                        //           ),
-                        //         ),
-                        //         Visibility(
-                        //           visible: !loadingCount,
-                        //           child: Text(
-                        //             "Load Grapgh",
-                        //             style: TextStyle(color: Colors.white),
-                        //             //Timer.period
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ))),
+                  children: [
+                    // Container(
+                    //   width: MediaQuery.of(context).size.width * 0.4,
+                    //   child: RaisedButton(
+                    //     color: Colors.lightBlue,
+                    //     onPressed: fireStoreTest,
+                    //     child: Stack(
+                    //       children: [
+                    //         Visibility(
+                    //           visible: loadingCount,
+                    //           child: Text(
+                    //             "Connecting Server",
+                    //             style: TextStyle(color: Colors.white),
+                    //             //Timer.period
+                    //           ),
+                    //         ),
+                    //         Visibility(
+                    //           visible: !loadingCount,
+                    //           child: Text(
+                    //             "Load Grapgh",
+                    //             style: TextStyle(color: Colors.white),
+                    //             //Timer.period
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ))),
           );
         });
       },
