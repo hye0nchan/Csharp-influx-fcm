@@ -39,26 +39,25 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         elevation: 0.0,
         items: [Icons.home, Icons.insert_chart, Icons.event_note, Icons.web]
             .asMap()
-            .map((key, value) =>
-            MapEntry(
-              key,
-              BottomNavigationBarItem(
-                label: '',
-                icon: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 6.0,
-                    horizontal: 16.0,
+            .map((key, value) => MapEntry(
+                  key,
+                  BottomNavigationBarItem(
+                    label: '',
+                    icon: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 6.0,
+                        horizontal: 16.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _currentIndex == key
+                            ? Colors.blue[600]
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Icon(value),
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: _currentIndex == key
-                        ? Colors.blue[600]
-                        : Colors.transparent,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Icon(value),
-                ),
-              ),
-            ))
+                ))
             .values
             .toList(),
       ),

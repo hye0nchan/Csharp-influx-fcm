@@ -47,7 +47,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final Completer<WebViewController> _controller =
-  Completer<WebViewController>();
+      Completer<WebViewController>();
 
   @override
   void initState() {
@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
           duration: 3000,
         ));
   }
+
   String data;
 
   String gateway;
@@ -110,7 +111,7 @@ class _MyAppState extends State<MyApp> {
     ExProtoClient stub = ExProtoClient(ClientChannel(fireStoreIp,
         port: 5054,
         options:
-        const ChannelOptions(credentials: ChannelCredentials.insecure())));
+            const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await for (response in stub.exServerstream(request)) {
       da = response.dataUnit;
       de = response.deviceId;
@@ -126,7 +127,6 @@ class _MyAppState extends State<MyApp> {
       print(device);
       channel == 2000 ? displaySensorData(da, device) : null;
     }
-
 
     return response;
   }

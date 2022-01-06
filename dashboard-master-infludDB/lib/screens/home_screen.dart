@@ -256,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
             bucket: 'farmcare',
             org: 'saltanb')
         .catchError((e) => print(e));
-  }f
+  }
 
   @override
   void initState() {
@@ -1178,7 +1178,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           TextButton(
             child: IconButton(
-              icon: const Icon(Icons.refresh),
+              icon: const Icon(Icons.refresh_outlined),
               iconSize: 28.0,
               color: Colors.white,
               onPressed: () {
@@ -1186,7 +1186,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             onPressed: () {
-              // Add function
+              //Navigator.pop(context);
+              setState(() {
+                //functionBox.changeVisibilityDialogLists(0);
               });
             },
           ),

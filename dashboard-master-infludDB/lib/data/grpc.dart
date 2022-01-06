@@ -65,7 +65,6 @@ class Grpc {
 
   //DeviceId, Gateway 변수 선언
 
-
   //DeviceId Int64로 형변형
   void deviceSubmitted() {
     stringDevice = "0x" + "500291AEBCD9";
@@ -92,7 +91,7 @@ class Grpc {
     stub = ExProtoClient(ClientChannel(fireStoreIp,
         port: 5054,
         options:
-        const ChannelOptions(credentials: ChannelCredentials.insecure())));
+            const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await stub.exClientstream(box
       ..channel = 2000
       ..sequenceNumber = 0
@@ -115,7 +114,7 @@ class Grpc {
     stub = ExProtoClient(ClientChannel(fireStoreIp,
         port: 5054,
         options:
-        const ChannelOptions(credentials: ChannelCredentials.insecure())));
+            const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await stub.exClientstream(box
       ..channel = 2000
       ..sequenceNumber = 0
@@ -138,7 +137,7 @@ class Grpc {
     stub = ExProtoClient(ClientChannel(fireStoreIp,
         port: 5054,
         options:
-        const ChannelOptions(credentials: ChannelCredentials.insecure())));
+            const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await stub.exClientstream(box
       ..channel = 2000
       ..sequenceNumber = 0

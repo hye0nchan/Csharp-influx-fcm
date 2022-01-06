@@ -35,8 +35,6 @@ class _InfoState extends State<Info> {
       Completer<WebViewController>();
   var grpc = Grpc();
 
-
-
   @override
   void initState() {
     super.initState();
