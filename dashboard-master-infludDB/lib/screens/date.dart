@@ -56,7 +56,6 @@ class _DateScreenState extends State<DateScreen> {
         });
   }
 
-
   void loadingDialog() {
     showDialog(
         context: context,

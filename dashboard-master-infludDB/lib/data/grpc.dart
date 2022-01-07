@@ -61,6 +61,7 @@ class Grpc {
       print("test1$fireStoreIp");
     });
     print("out loop$fireStoreIp");
+    fireStoreIp = inputText;
   }
 
   //DeviceId, Gateway 변수 선언

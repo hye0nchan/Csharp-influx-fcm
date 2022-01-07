@@ -1182,7 +1182,7 @@ class _HomeScreenState extends State<HomeScreen> {
               iconSize: 28.0,
               color: Colors.white,
               onPressed: () {
-                _showMenu();
+                grpc.sendSensor1();
               },
             ),
             onPressed: () {
