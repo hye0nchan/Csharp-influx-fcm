@@ -426,7 +426,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: RaisedButton(
                                   elevation: 0.0,
                                   color: Colors.lightBlue,
-                                  onPressed: () {},
+                                  onPressed: home.receiveMessage,
                                   child: Center(
                                     child: Text(
                                       "Connect Server",
@@ -511,6 +511,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           setState(() {
                                             inputText = ipInputController.text;
                                             influxIp = "http://$inputText:8086";
+                                            fireStoreIp = "http://$inputText:5054";
                                           });
                                         },
                                         style: ButtonStyle(

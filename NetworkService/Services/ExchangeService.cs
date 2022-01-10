@@ -34,6 +34,7 @@ namespace NetService
         internal static IServerStreamWriter<CmdMessage> responseStreamCmd = null;
         internal static IServerStreamWriter<RtuMessage> responseStream = null;
         internal static IServerStreamWriter<RtuMessage> responseStreamInflux = null;
+        internal static IServerStreamWriter<ExMessage> responseExMessage = null;
 
         public ExchangeService(ILoggerFactory loggerFactory)
         {

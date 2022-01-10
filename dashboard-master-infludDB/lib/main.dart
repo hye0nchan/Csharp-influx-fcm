@@ -2,7 +2,7 @@
 
 //c# client 완성
 import 'dart:async';
-import 'dart:convert';
+import'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -40,20 +40,7 @@ The navigation delegate is set to block navigation to the youtube website.
 </html>
 ''';
 
-class MyApp extends StatefulWidget {
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final Completer<WebViewController> _controller =
-      Completer<WebViewController>();
-
-  @override
-  void initState() {
-    super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-  }
+class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +117,7 @@ class _MyAppState extends State<MyApp> {
 
     return response;
   }
+
 
   void displaySensorData(List<int> receiveData, Int64 device) {
     print(device);

@@ -13,7 +13,7 @@ namespace WFormsUserApp
 {
     internal partial class Form1 : Form
     {
-        private static GrpcChannel channel = GrpcChannel.ForAddress("http://172.17.160.1:5054");
+        private static GrpcChannel channel = GrpcChannel.ForAddress("http://172.24.32.1:5054");
         internal static ExProto.ExProtoClient exchange = new ExProto.ExProtoClient(channel);
         internal static AsyncDuplexStreamingCall<RtuMessage, RtuMessage> rtuLink = exchange.MessageRtu();
         internal static AsyncDuplexStreamingCall<ExtMessage, ExtMessage> extLink = exchange.MessageExt();
@@ -727,7 +727,7 @@ namespace WFormsUserApp
                             lvi.SubItems.Add(valueList1[i].ToString());
                             listView1.Items.Add(lvi);
                         });
-                        
+
 
                         using (var writeApi = influxDBClient.GetWriteApi())
                         {
@@ -947,12 +947,12 @@ namespace WFormsUserApp
 
         private void button3_Click(object sender, EventArgs e)
         {
-            timer3.Interval = (Convert.ToInt32(textBox3.Text))*1000;
+            timer3.Interval = (Convert.ToInt32(textBox3.Text)) * 1000;
         }
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!(char.IsDigit(e.KeyChar)|| e.KeyChar == Convert.ToChar(Keys.Back)))
+            if (!(char.IsDigit(e.KeyChar) || e.KeyChar == Convert.ToChar(Keys.Back)))
             {
                 e.Handled = true;
             }

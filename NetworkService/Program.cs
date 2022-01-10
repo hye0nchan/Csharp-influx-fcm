@@ -16,21 +16,20 @@
 
 #endregion
 
+using Google.Cloud.Firestore;
+using Grpc.Core;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
-using Grpc.Core;
-using Grpc.Net.Client;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using NetExchange;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using Google.Cloud.Firestore;
-using System.Collections.Generic;
-using Google.Protobuf;
-using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NetService
 {
@@ -54,7 +53,7 @@ namespace NetService
                 {
                     RtuMessage response = rtuLink.ResponseStream.Current; // From Server
                     IServerStreamWriter<RtuMessage> responseStream = ExchangeService.responseStreamRtu;
-                    
+
                     IServerStreamWriter<RtuMessage> responseStream_influxDB = ExchangeService.responseStreamInflux;
                     var protocol = (byte)response.Channel;
                     Debug.WriteLine(protocol);
@@ -71,7 +70,7 @@ namespace NetService
                                 break;
                         }
                         await responseStream.WriteAsync(response); // Server to Client
-                        
+
                     }
                     ExchangeService.RxLink(ref response);
 

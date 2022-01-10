@@ -394,7 +394,7 @@ String dateSelectedItem = "Tem";
 //firestore
 
 List<String> fireStoreTokenList = [];
-String fireStoreIp = 'service Data';
+String fireStoreIp = "test";
 ////////////////////////////////////////////////////////////////////////////////
 //Map
 Map<int, bool> isCheckedMap = {
