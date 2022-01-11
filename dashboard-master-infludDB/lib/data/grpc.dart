@@ -94,7 +94,7 @@ class Grpc {
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await stub.exClientstream(box
-      ..channel = 2000
+      ..channel = 200
       ..sequenceNumber = 0
       ..gwId = 0
       ..dataUnit = [
@@ -117,7 +117,7 @@ class Grpc {
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await stub.exClientstream(box
-      ..channel = 2000
+      ..channel = 200
       ..sequenceNumber = 0
       ..gwId = 0
       ..dataUnit = [
@@ -140,7 +140,7 @@ class Grpc {
         options:
             const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await stub.exClientstream(box
-      ..channel = 2000
+      ..channel = 200
       ..sequenceNumber = 0
       ..gwId = 0
       ..dataUnit = [

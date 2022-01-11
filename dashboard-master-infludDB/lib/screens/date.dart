@@ -1,7 +1,4 @@
-// ignore_for_file: deprecated_member_use, unnecessary_statements, missing_return
-
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smartfarm_dashboard/config/palette.dart';
 import 'package:smartfarm_dashboard/config/styles.dart';

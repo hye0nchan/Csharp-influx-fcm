@@ -13,7 +13,7 @@ namespace WFormsUserApp
 {
     internal partial class Form1 : Form
     {
-        private static GrpcChannel channel = GrpcChannel.ForAddress("http://172.24.32.1:5054");
+        private static GrpcChannel channel = GrpcChannel.ForAddress("http://172.22.96.1:5054");
         internal static ExProto.ExProtoClient exchange = new ExProto.ExProtoClient(channel);
         internal static AsyncDuplexStreamingCall<RtuMessage, RtuMessage> rtuLink = exchange.MessageRtu();
         internal static AsyncDuplexStreamingCall<ExtMessage, ExtMessage> extLink = exchange.MessageExt();

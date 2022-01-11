@@ -32,46 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   TextEditingController ipInputController = TextEditingController();
 
-  double temValue = 0;
-  double humValue = 0;
-  double co2Value = 0;
-  double uvValue = 0;
-  double luxValue = 0;
-  double nh3Value = 0;
-  double nh3LValue = 0;
-  double nh3MValue = 0;
-  double nh3HValue = 0;
-  double no2Value = 0;
-  double no2LValue = 0;
-  double no2MValue = 0;
-  double no2HValue = 0;
-  double coValue = 0;
-  double coLValue = 0;
-  double coMValue = 0;
-  double coHValue = 0;
 
-  String nullTem = "";
-  String nullHum = "";
-  String nullCo2 = "";
-  String nullLux = "";
-  String nullUv = "";
-
-  String nullNh3 = "";
-  String nullNh3L = "";
-  String nullNh3M = "";
-  String nullNh3H = "";
-  String nullNo2 = "";
-
-  String nullNo2L = "";
-  String nullNo2M = "";
-
-  String nullNo2H = "";
-
-  String nullCo = "";
-
-  String nullCoL = "";
-  String nullCoM = "";
-  String nullCoH = "";
 
   bool switchValue = true;
 
@@ -511,7 +472,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           setState(() {
                                             inputText = ipInputController.text;
                                             influxIp = "http://$inputText:8086";
-                                            fireStoreIp = "http://$inputText:5054";
+                                            fireStoreIp =
+                                                "http://$inputText:5054";
                                           });
                                         },
                                         style: ButtonStyle(
@@ -1388,7 +1350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           annotations: <GaugeAnnotation>[
                             GaugeAnnotation(
                               widget: Text(
-                                '$nullTem C',
+                                '$sensor1redTemData C',
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.bold),

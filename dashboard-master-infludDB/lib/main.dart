@@ -2,7 +2,7 @@
 
 //c# client 완성
 import 'dart:async';
-import'dart:convert';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -41,7 +41,6 @@ The navigation delegate is set to block navigation to the youtube website.
 ''';
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -112,12 +111,11 @@ class MyApp extends StatelessWidget {
         device = de;
       }
       print(device);
-      channel == 2000 ? displaySensorData(da, device) : null;
+      channel == 200 ? displaySensorData(da, device) : null;
     }
 
     return response;
   }
-
 
   void displaySensorData(List<int> receiveData, Int64 device) {
     print(device);

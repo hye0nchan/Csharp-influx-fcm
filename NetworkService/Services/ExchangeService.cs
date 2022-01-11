@@ -95,7 +95,7 @@ namespace NetService
 
 
         internal static void TxLink(ref RtuMessage request)
-        {
+        {                   
             RtuMessage response = request;
 
             Program.rtuLink.RequestStream.WriteAsync(response);
