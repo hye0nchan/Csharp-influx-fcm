@@ -2,8 +2,7 @@
 
 //c# client 완성
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
+import 'login_page.dart';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,10 +10,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
-import 'package:ntp/ntp.dart';
+
 import 'package:smartfarm_dashboard/network.pb.dart';
 import 'package:smartfarm_dashboard/screens/bottom_nav_screen.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+
 import 'data/data.dart';
 import 'network.pbgrpc.dart';
 
