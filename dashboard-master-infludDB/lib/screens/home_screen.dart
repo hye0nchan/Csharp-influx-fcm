@@ -227,6 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+
   void getToken() async {
     String token = await FirebaseMessaging.instance.getToken(); //디바이스 토큰 가져오기
 
