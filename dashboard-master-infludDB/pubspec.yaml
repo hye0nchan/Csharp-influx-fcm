@@ -47,6 +47,7 @@ dependencies:
   ntp: ^2.0.0
   firebase_messaging: ^11.1.0
   flutter_local_notifications: ^9.2.0
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,9 @@
 
 //c# client 완성
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
+import 'controllers/app_controller.dart';
 import 'login_page.dart';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -38,8 +41,18 @@ The navigation delegate is set to block navigation to the youtube website.
 </body>
 </html>
 ''';
+//void foreGround(){
+  //FirebaseMessaging.onMessage.listen((RemoteMessage rm) {
+    //message.value = rm;
+    //Get.dialog(AlertDialog(
+      //title: Text(rm.notification?.title ?? 'TITLE'),
+      //content: Text(rm.notification?.body ?? 'BODY'),
+    //));
+  //});
 
-class MyApp extends StatelessWidget {
+
+  class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
