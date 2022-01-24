@@ -16,14 +16,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        // 앱이 실행 중일 때 (Foreground 상황) 에서 푸쉬를 받으면 호출됩니다.
-        // 백그라운드 상황에서는 호출되지 않고 그냥 알림목록에 알림이 추가됩니다.
-
-        if ( remoteMessage.getData().size() > 0 ) {
+        if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "FCM Data Message : " + remoteMessage.getData());
         }
 
-        if ( remoteMessage.getNotification() != null ) {
+        if (remoteMessage.getNotification() != null) {
             final String messageBody = remoteMessage.getNotification().getBody();
 
             Log.d(TAG, "FCM Notification Message Body : " + messageBody);

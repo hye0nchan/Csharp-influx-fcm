@@ -42,17 +42,15 @@ The navigation delegate is set to block navigation to the youtube website.
 </html>
 ''';
 //void foreGround(){
-  //FirebaseMessaging.onMessage.listen((RemoteMessage rm) {
-    //message.value = rm;
-    //Get.dialog(AlertDialog(
-      //title: Text(rm.notification?.title ?? 'TITLE'),
-      //content: Text(rm.notification?.body ?? 'BODY'),
-    //));
-  //});
+//FirebaseMessaging.onMessage.listen((RemoteMessage rm) {
+//message.value = rm;
+//Get.dialog(AlertDialog(
+//title: Text(rm.notification?.title ?? 'TITLE'),
+//content: Text(rm.notification?.body ?? 'BODY'),
+//));
+//});
 
-
-  class MyApp extends StatelessWidget {
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
