@@ -3,9 +3,9 @@
 //c# client 완성
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'controllers/app_controller.dart';
-import 'login_page.dart';
+import 'package:smartfarm_dashboard/screens/home_screen.dart';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,11 +20,22 @@ import 'package:smartfarm_dashboard/screens/bottom_nav_screen.dart';
 import 'data/data.dart';
 import 'network.pbgrpc.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
+  await Firebase.initializeApp();
+  print('Handling a background Message ${message.messageId}');
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await flutterLocalNotificationsPlugin
+  .resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()
+  ?.createNotificationChannel(channel);
   runApp(MyApp());
-  var home = MyApp();
 }
 
 const String kNavigationExamplePage = '''
@@ -41,16 +52,13 @@ The navigation delegate is set to block navigation to the youtube website.
 </body>
 </html>
 ''';
-//void foreGround(){
-//FirebaseMessaging.onMessage.listen((RemoteMessage rm) {
-//message.value = rm;
-//Get.dialog(AlertDialog(
-//title: Text(rm.notification?.title ?? 'TITLE'),
-//content: Text(rm.notification?.body ?? 'BODY'),
-//));
-//});
+
 
 class MyApp extends StatelessWidget {
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -107,7 +115,7 @@ class MyApp extends StatelessWidget {
     ExProtoClient stub = ExProtoClient(ClientChannel(fireStoreIp,
         port: 5054,
         options:
-            const ChannelOptions(credentials: ChannelCredentials.insecure())));
+        const ChannelOptions(credentials: ChannelCredentials.insecure())));
     await for (response in stub.exServerstream(request)) {
       da = response.dataUnit;
       de = response.deviceId;

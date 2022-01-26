@@ -1,4 +1,0 @@
-1. 온도 페이지 완성
-2. DropdownButton -> RasiedButton, on tap(sendMessage)
-3. appbar notifications_none -> on tap (connect service)
-4. SfCartesianChart 수정 (가로축 세로축)

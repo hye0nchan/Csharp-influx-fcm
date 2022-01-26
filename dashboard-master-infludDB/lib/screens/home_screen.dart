@@ -4,11 +4,12 @@ import 'dart:async';
 import 'dart:io';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:influxdb_client/api.dart';
-import 'package:ntp/ntp.dart';
 import 'package:smartfarm_dashboard/config/palette.dart';
 import 'package:smartfarm_dashboard/config/styles.dart';
 import 'package:smartfarm_dashboard/data/data.dart';
@@ -18,6 +19,18 @@ import 'package:smartfarm_dashboard/data/influxDB.dart';
 import 'package:smartfarm_dashboard/widgets/stats_grid.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../main.dart';
+
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'high_importance_Notifications',
+  importance: Importance.high
+);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -53,8 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int coLDataCount = 0;
   int coMDataCount = 0;
   int coHDataCount = 0;
-
-  void textApply() {}
 
   void readInfluxDB() async {
     print(readCount);
@@ -219,10 +230,35 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    super.initState();
     getToken();
     readInfluxDB();
     hideGauge();
-    super.initState();
+
+    var initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings =
+    InitializationSettings(android: initializationSettingsAndroid);
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message){
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if(notification!=null&&android!=null){
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              icon: 'launch_background',
+            ),
+          ));
+      }
+    });
   }
 
   void getToken() async {
