@@ -10,13 +10,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:influxdb_client/api.dart';
-import 'package:smartfarm_dashboard/config/palette.dart';
-import 'package:smartfarm_dashboard/config/styles.dart';
-import 'package:smartfarm_dashboard/data/data.dart';
-import 'package:smartfarm_dashboard/data/function.dart';
-import 'package:smartfarm_dashboard/data/grpc.dart';
-import 'package:smartfarm_dashboard/data/influxDB.dart';
-import 'package:smartfarm_dashboard/widgets/stats_grid.dart';
+import 'package:fcm_notifications/config/palette.dart';
+import 'package:fcm_notifications/config/styles.dart';
+import 'package:fcm_notifications/data/data.dart';
+import 'package:fcm_notifications/data/function.dart';
+import 'package:fcm_notifications/data/grpc.dart';
+import 'package:fcm_notifications/data/influxDB.dart';
+import 'package:fcm_notifications/widgets/stats_grid.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../main.dart';
 
@@ -409,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: RaisedButton(
                                   elevation: 0.0,
                                   color: Colors.lightBlue,
-                                  onPressed: home.receiveMessage,
+                                  onPressed: (){},
                                   child: Center(
                                     child: Text(
                                       "Connect Server",

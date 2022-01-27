@@ -1,10 +1,7 @@
 // ignore_for_file: unnecessary_statements, must_be_immutable
-
-//c# client 완성
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
 import 'package:smartfarm_dashboard/screens/home_screen.dart';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -13,28 +10,49 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
-
 import 'package:smartfarm_dashboard/network.pb.dart';
 import 'package:smartfarm_dashboard/screens/bottom_nav_screen.dart';
-
 import 'data/data.dart';
 import 'network.pbgrpc.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('Handling a background Message ${message.messageId}');
+  print('Handling a background message ${message.messageId}');
+  print(message.data);
+  flutterLocalNotificationsPlugin.show(
+      message.data.hashCode,
+      message.data['title'],
+      message.data['body'],
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channel.description,
+        ),
+      ));
 }
 
-Future<void> main() async {
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  'This channel is used for important notifications.', // description
+  importance: Importance.high,
+);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   await flutterLocalNotificationsPlugin
-  .resolvePlatformSpecificImplementation<
+      .resolvePlatformSpecificImplementation<
       AndroidFlutterLocalNotificationsPlugin>()
-  ?.createNotificationChannel(channel);
+      ?.createNotificationChannel(channel);
+
   runApp(MyApp());
 }
 
@@ -52,7 +70,6 @@ The navigation delegate is set to block navigation to the youtube website.
 </body>
 </html>
 ''';
-
 
 class MyApp extends StatelessWidget {
 
