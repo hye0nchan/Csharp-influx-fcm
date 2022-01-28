@@ -15,7 +15,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
 ////////////////////////////////////////////////////////////////////////////////
 // influxDB
 
-var influxIp = "http://172.20.2.70:8086";
+var influxIp = "http://172.20.2.87:8086";
 var inputText = "test";
 var client = InfluxDBClient(
     url: influxIp,

@@ -46,7 +46,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -62,16 +62,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String token;
-  List subscribed = [];
-  List topics = [
-    'Samsung',
-    'Apple',
-    'Huawei',
-    'Nokia',
-    'Sony',
-    'HTC',
-    'Lenovo'
-  ];
   @override
   void initState() {
     super.initState();
@@ -100,7 +90,6 @@ class _MyAppState extends State<MyApp> {
       }
     });
     getToken();
-    getTopics();
   }
 
   @override
@@ -135,22 +124,6 @@ class _MyAppState extends State<MyApp> {
     var token2 = await FirebaseMessaging.instance.getToken();
     setState(() {
       token = token;
-    });
-    print("현재 토큰 : $token2");
-  }
-
-  getTopics() async {
-    await FirebaseFirestore.instance
-        .collection('topics')
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              if (token == element.id) {
-                subscribed = element.data().keys.toList();
-              }
-            }));
-
-    setState(() {
-      subscribed = subscribed;
     });
   }
 }
