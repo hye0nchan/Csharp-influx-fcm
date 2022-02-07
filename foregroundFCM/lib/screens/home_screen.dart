@@ -17,7 +17,9 @@ import 'package:fcm_notifications/data/function.dart';
 import 'package:fcm_notifications/data/grpc.dart';
 import 'package:fcm_notifications/data/influxDB.dart';
 import 'package:fcm_notifications/widgets/stats_grid.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../main.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -224,9 +226,9 @@ class _HomeScreenState extends State<HomeScreen> {
     hideGauge();
 
     var initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(android: initializationSettingsAndroid);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -409,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: RaisedButton(
                                   elevation: 0.0,
                                   color: Colors.lightBlue,
-                                  onPressed: (){},
+                                  onPressed: () {},
                                   child: Center(
                                     child: Text(
                                       "Connect Server",
@@ -1124,668 +1126,415 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
+        title: Column(
+          children: [
+            SizedBox(
+              height: screenHeight * 0.03,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "FarmCare Dashboard",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.w700),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.menu),
+                      iconSize: 28.0,
+                      color: Colors.white,
+                      onPressed: () {
+                        _showMenu();
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.refresh_outlined),
+                      iconSize: 28.0,
+                      color: Colors.white,
+                      onPressed: () {
+                        grpc.sendSensor1();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
         elevation: 0.0,
         backgroundColor: Palette.primaryColor,
-        actions: <Widget>[
-          TextButton(
-            child: IconButton(
-              icon: const Icon(Icons.delete),
-              iconSize: 28.0,
-              color: Colors.white,
-              onPressed: () {
-                delInfluxDB();
-              },
-            ),
-            onPressed: () {
-              //Navigator.pop(context);
-              setState(() {
-                //functionBox.changeVisibilityDialogLists(0);
-              });
-            },
-          ),
-          TextButton(
-            child: IconButton(
-              icon: const Icon(Icons.menu),
-              iconSize: 28.0,
-              color: Colors.white,
-              onPressed: () {
-                _showMenu();
-              },
-            ),
-            onPressed: () {
-              //Navigator.pop(context);
-              setState(() {
-                //functionBox.changeVisibilityDialogLists(0);
-              });
-            },
-          ),
-          TextButton(
-            child: IconButton(
-              icon: const Icon(Icons.refresh_outlined),
-              iconSize: 28.0,
-              color: Colors.white,
-              onPressed: () {
-                grpc.sendSensor1();
-              },
-            ),
-            onPressed: () {
-              //Navigator.pop(context);
-              setState(() {
-                //functionBox.changeVisibilityDialogLists(0);
-              });
-            },
-          ),
-        ],
       ),
       body: CustomScrollView(
         physics: ClampingScrollPhysics(),
         slivers: <Widget>[
-          _buildHeader(screenHeight),
-          _buildPreventionTips(screenHeight),
+          _buildHeader(screenHeight, screenWidth),
+          _buildPreventionTips(screenHeight, screenWidth),
           //_buildInputIp(screenHeight)
         ],
       ),
     );
   }
 
-  SliverToBoxAdapter _buildHeader(double screenHeight) {
+  SliverToBoxAdapter _buildHeader(double screenHeight, double screenWidth) {
     return SliverToBoxAdapter(
       child: Container(
-        height: screenHeight * 0.14,
+        height: screenHeight * 0.035,
         padding: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
             color: Palette.primaryColor,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40.0),
-              bottomRight: Radius.circular(40.0),
+              bottomLeft: Radius.circular(45.0),
+              bottomRight: Radius.circular(45.0),
             )),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "Sensing DATA",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  width: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: DropdownButtonHideUnderline(
-                    child: Center(
-                      child: DropdownButton<String>(
-                        value: homeSelectedItem,
-                        items: dropDownItem
-                            .map((e) => DropdownMenuItem(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  value: e,
-                                ))
-                            .toList(),
-                        onChanged: (String value) {
-                          setState(() {
-                            homeHolder = value;
-                            homeSelectedItem = value;
-                            hideGauge();
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.height * 0.05,
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  width: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: DropdownButtonHideUnderline(
-                    child: Center(
-                      child: DropdownButton<String>(
-                        value: homeSelectedItem2,
-                        items: dropDownItem2
-                            .map((e) => DropdownMenuItem(
-                                  child: Row(
-                                    children: <Widget>[
-                                      Text(
-                                        e,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  value: e,
-                                ))
-                            .toList(),
-                        onChanged: (String value) {
-                          setState(() {
-                            homeHolder2 = value;
-                            homeSelectedItem2 = value;
-                            hideGauge();
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
 
-  SliverToBoxAdapter _buildPreventionTips(double screenHeight) {
+  Widget _buildTile(Widget child, {Function() onTap}) {
+    return Material(
+        elevation: 14.0,
+        borderRadius: BorderRadius.circular(12.0),
+        shadowColor: Color(0x802196F3),
+        child: InkWell(
+            // Do onTap() if it isn't null, otherwise do print()
+            onTap: onTap != null
+                ? () => onTap()
+                : () {
+                    print('Not set yet');
+                  },
+            child: child));
+  }
+
+  SliverToBoxAdapter _buildPreventionTips(
+      double screenHeight, double screenWidth) {
     return SliverToBoxAdapter(
-      child: Container(
-        height: screenHeight * 0.85,
-        padding: const EdgeInsets.all(20.0),
-        color: Colors.white,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Text(("재배기 내부 센서"),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25.0)),
+        ),
+        StaggeredGrid.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12.0,
+          mainAxisSpacing: 12.0,
           children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[0],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "Temperature Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 온도',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blueAccent)),
+                          Text('26°C',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
                       ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 0,
-                          maximum: 70,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: temValue,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: -0,
-                              endValue: 20,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 20,
-                              endValue: 30,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 30,
-                              endValue: 50,
-                              color: Colors.red,
-                            ),
-                            GaugeRange(
-                              startValue: 50,
-                              endValue: 70,
-                              color: Colors.grey,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                '$sensor1redTemData C',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[1],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "Humidity Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
-                      ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 0,
-                          maximum: 90,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: humValue,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: 0,
-                              endValue: 20,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 20,
-                              endValue: 40,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 40,
-                              endValue: 70,
-                              color: Colors.red,
-                            ),
-                            GaugeRange(
-                              startValue: 70,
-                              endValue: 90,
-                              color: Colors.grey,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                '$nullHum%',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[2],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "CO2 Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
-                      ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 300,
-                          maximum: 2000,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: co2Value,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: 300,
-                              endValue: 800,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 800,
-                              endValue: 1500,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 1500,
-                              endValue: 2000,
-                              color: Colors.red,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                "$nullCo2 ppm",
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[3],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "Ammonia Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
-                      ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 500,
-                          maximum: 2000,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: nh3Value,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: 500,
-                              endValue: 1000,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 1000,
-                              endValue: 1500,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 1500,
-                              endValue: 2000,
-                              color: Colors.red,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                '$nullNh3 ppm',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[4],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "Lux Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
-                      ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: 0,
-                          maximum: 20000,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: luxValue,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: 0,
-                              endValue: 2000,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 2000,
-                              endValue: 5000,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 5000,
-                              endValue: 8000,
-                              color: Colors.red,
-                            ),
-                            GaugeRange(
-                              startValue: 8000,
-                              endValue: 15000,
-                              color: Colors.grey,
-                            ),
-                            GaugeRange(
-                              startValue: 15000,
-                              endValue: 20000,
-                              color: Colors.black,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                '$nullLux lx',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[5],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "NO2 Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
-                      ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: -20,
-                          maximum: 80,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: no2Value,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: -20,
-                              endValue: 0,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 20,
-                              endValue: 40,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 0,
-                              endValue: 30,
-                              color: Colors.red,
-                            ),
-                            GaugeRange(
-                              startValue: 30,
-                              endValue: 50,
-                              color: Colors.grey,
-                            ),
-                            GaugeRange(
-                              startValue: 50,
-                              endValue: 80,
-                              color: Colors.black,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                '$nullNo2 C',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: screenHeight * 0.6,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Visibility(
-                    visible: visibilityMap[6],
-                    child: SfRadialGauge(
-                      title: GaugeTitle(
-                        text: "CO Gauge",
-                        textStyle: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        alignment: GaugeAlignment.center,
-                      ),
-                      enableLoadingAnimation: true,
-                      animationDuration: 1000,
-                      axes: <RadialAxis>[
-                        RadialAxis(
-                          minimum: -20,
-                          maximum: 80,
-                          pointers: <GaugePointer>[
-                            NeedlePointer(
-                              value: coValue,
-                              enableAnimation: true,
-                            )
-                          ],
-                          ranges: <GaugeRange>[
-                            GaugeRange(
-                              startValue: -20,
-                              endValue: 0,
-                              color: Colors.green,
-                            ),
-                            GaugeRange(
-                              startValue: 20,
-                              endValue: 40,
-                              color: Colors.orange,
-                            ),
-                            GaugeRange(
-                              startValue: 0,
-                              endValue: 30,
-                              color: Colors.red,
-                            ),
-                            GaugeRange(
-                              startValue: 30,
-                              endValue: 50,
-                              color: Colors.grey,
-                            ),
-                            GaugeRange(
-                              startValue: 50,
-                              endValue: 80,
-                              color: Colors.black,
-                            ),
-                          ],
-                          annotations: <GaugeAnnotation>[
-                            GaugeAnnotation(
-                              widget: Text(
-                                '$nullCo C',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              positionFactor: 0.8,
-                              angle: 90,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+                    ]),
+              ),
             ),
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 습도',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blueAccent)),
+                          Text('65%',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 조도',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blueAccent)),
+                          Text('2LUX',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 CO2',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.blueAccent)),
+                          Text('500ppm',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            StaggeredGridTile.count(
+              crossAxisCellCount: 2,
+              mainAxisCellCount: 1,
+              child: Material(
+                elevation: 14.0,
+                borderRadius: BorderRadius.circular(12.0),
+                shadowColor: Color(0x802196F3),
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('DB 그래프',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.blueAccent)),
+                            Text('265K',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 34.0))
+                          ],
+                        ),
+                        Material(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(24.0),
+                            child: Center(
+                                child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Icon(Icons.timeline,
+                                  color: Colors.white, size: 30.0),
+                            )))
+                      ]),
+                ),
+              ),
+            )
           ],
         ),
-      ),
-    );
+        SizedBox(
+          height: screenHeight * 0.03,
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Text(("재배기 외부 센서"),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 25.0)),
+        ),
+        StaggeredGrid.count(
+          crossAxisCount: 2,
+          crossAxisSpacing: 12.0,
+          mainAxisSpacing: 12.0,
+          children: <Widget>[
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 온도',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.green)),
+                          Text('26°C',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 습도',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.green)),
+                          Text('65%',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 조도',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.green)),
+                          Text('2LUX',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('현재 CO2',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.green)),
+                          Text('500ppm',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 34.0))
+                        ],
+                      ),
+                    ]),
+              ),
+            ),
+            StaggeredGridTile.count(
+                crossAxisCellCount: 2,
+                mainAxisCellCount: 1,
+                child: Material(
+                  elevation: 14.0,
+                  borderRadius: BorderRadius.circular(12.0),
+                  shadowColor: Color(0x802196F3),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Revenue',
+                                        style: TextStyle(color: Colors.green)),
+                                    Text('\$16K',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 34.0)),
+                                  ],
+                                ),
+                                Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                                SfSparkLineChart(
+                                  data: [],
+                                  width: 5.0,
+                                )
+                              ]),
+                        ]),
+                  ),
+                ))
+          ],
+        ),
+      ],
+    ));
   }
 }
