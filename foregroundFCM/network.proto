@@ -23,9 +23,16 @@ service ExProto {
   rpc MessageRtu (stream RtuMessage) returns (stream RtuMessage);
   rpc MessageExt (stream ExtMessage) returns (stream ExtMessage);
   rpc MessageCmd (stream CmdMessage) returns (stream CmdMessage);
+
+  rpc ExLink (stream ExMessage) returns (stream ExMessage);
+
+  rpc influxDB (stream RtuMessage) returns (stream RtuMessage);
+
   rpc ExClientstream (RtuMessage) returns (RtuMessage);
   rpc ExServerstream (RtuMessage) returns (stream RtuMessage);
 }
+
+// Remote Terminal Unit streaming for Modbus Master
 
 message ExMessage {
   uint32 route = 1;
@@ -34,14 +41,12 @@ message ExMessage {
   bytes data_unit = 4; // Transmission Data Unit
 }
 
-// Remote Terminal Unit streaming for Modbus Master
 message RtuMessage {
   uint32 channel = 1;
   uint32 sequence_number = 2;
   uint32 gw_id = 3;
   uint64 device_id = 4;
-  bytes data_unit = 5;
-  uint32 sensor = 6;
+  bytes data_unit = 5; // Transmission Data Unit
 }
 
 // RTU exchanging streaming for Modbus Slave

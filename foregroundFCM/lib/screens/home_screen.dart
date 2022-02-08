@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +15,9 @@ import 'package:fcm_notifications/data/data.dart';
 import 'package:fcm_notifications/data/function.dart';
 import 'package:fcm_notifications/data/grpc.dart';
 import 'package:fcm_notifications/data/influxDB.dart';
-import 'package:fcm_notifications/widgets/stats_grid.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../main.dart';
+import 'package:sparkline/sparkline.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -28,6 +25,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static final List<String> chartDropdownItems = ['온도', '습도', 'CO2', '조도'];
+  String actualDropdown = "온도";
+  int actualChart = 0;
+
   var grpc = Grpc();
   var functionBox = FunctionBox();
   var home = MyApp();
@@ -57,30 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
   int coMDataCount = 0;
   int coHDataCount = 0;
 
-  void readInfluxDB() async {
-    print(readCount);
-    if (readCount) {
-      for (int i = 0; i < allSensorList.length; i++) {
-        var sensorStream = await queryService.query('''
-  from(bucket: "farmcare")
-  |> range(start: -24h)
-  |> filter(fn: (r) => r["_measurement"] == "${allSensorList[i]}")
-  |> yield(name: "mean")
-  ''');
-        await sensorStream.forEach((record) {
-          DateTime date = DateTime.parse(record['_time']);
-          var value = record['_value'];
-          setState(() {
-            if (i != 4 && value != 0) {
-              sensorChartData[i].add(ChartData(date, value));
-            }
-          });
-        });
-      }
-      readCount = false;
-    }
-  }
-
   void refreshAll() {
     refreshSensor3();
     sleep(const Duration(seconds: 1));
@@ -90,28 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> refreshSensor1() async {
-    timerSensor1 =
-        Timer.periodic(Duration(seconds: intRecyclePeriod), (timer) async {
-      grpc.sendSensor1();
+    grpc.sendSensor1();
 
-      (isCheckedMap[0]) ? influxDB.tem1AddInfluxDB() : null;
-      (isCheckedMap[1]) ? influxDB.hum1AddInfluxDB() : null;
-      (isCheckedMap[2]) ? influxDB.co21AddInfluxDB() : null;
-      (isCheckedMap[3]) ? influxDB.lux1AddInfluxDB() : null;
-      (isCheckedMap[4]) ? influxDB.uv1AddInfluxDB() : null;
-      (isCheckedMap[5]) ? influxDB.nh31AddInfluxDB() : null;
-      (isCheckedMap[6]) ? influxDB.nh3L1AddInfluxDB() : null;
-      (isCheckedMap[7]) ? influxDB.nh3M1AddInfluxDB() : null;
-      (isCheckedMap[8]) ? influxDB.nh3H1AddInfluxDB() : null;
-      (isCheckedMap[9]) ? influxDB.no21AddInfluxDB() : null;
-      (isCheckedMap[10]) ? influxDB.no2L1AddInfluxDB() : null;
-      (isCheckedMap[11]) ? influxDB.no2M1AddInfluxDB() : null;
-      (isCheckedMap[12]) ? influxDB.no2H1AddInfluxDB() : null;
-      (isCheckedMap[13]) ? influxDB.co21AddInfluxDB() : null;
-      (isCheckedMap[14]) ? influxDB.coL1AddInfluxDB() : null;
-      (isCheckedMap[15]) ? influxDB.coM1AddInfluxDB() : null;
-      (isCheckedMap[16]) ? influxDB.coH1AddInfluxDB() : null;
-    });
+    var tem1Value = double.parse(sensor1redTemData);
+    var hum1Value = double.parse(sensor1redTemData);
+    var co21Value = double.parse(sensor1redTemData);
+    var uv1Value = double.parse(sensor1redTemData);
+
+    if (this.mounted) {
+      setState(() {
+        temValue = tem1Value;
+        humValue = hum1Value;
+        co2Value = co21Value;
+        uvValue = uv1Value;
+      });
+    }
   }
 
   Future<void> refreshSensor2() async {
@@ -222,7 +192,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getToken();
-    readInfluxDB();
     hideGauge();
 
     var initializationSettingsAndroid =
@@ -252,48 +221,51 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getToken() async {
-    String token = await FirebaseMessaging.instance.getToken(); //디바이스 토큰 가져오기
+    if (tokenCount) {
+      String token = await FirebaseMessaging.instance.getToken(); //디바이스 토큰 가져오기
 
-    print("현재 토큰 : $token");
+      print("현재 토큰 : $token");
 
-    final f = FirebaseFirestore.instance; // 인스턴스 할당
-    String firesStoreToken;
+      final f = FirebaseFirestore.instance; // 인스턴스 할당
+      String firesStoreToken;
 
-    await f //fireStore에 저장된 토큰 전부 가져오기
-        .collection("Token")
-        .get()
-        .then((QuerySnapshot ds) async {
-      if (ds.docs.length == 0) {
-        //등록된 디바이스가 없으면
-        await f //fireStore에 저장
-            .collection('Token')
-            .doc('device1')
-            .set({'value': token});
-        print(ds.docs.length);
-      }
-    });
-
-    await f //fireStore에 저장된 토큰 전부 가져오기
-        .collection("Token")
-        .get()
-        .then((QuerySnapshot ds) async {
-      ds.docs.forEach((doc) async {
-        if (ds.docs.length != 0) {
-          firesStoreToken = doc["value"];
-          fireStoreTokenList.add(firesStoreToken); //가져온 토큰 리스트에 저장
+      await f //fireStore에 저장된 토큰 전부 가져오기
+          .collection("Token")
+          .get()
+          .then((QuerySnapshot ds) async {
+        if (ds.docs.length == 0) {
+          //등록된 디바이스가 없으면
+          await f //fireStore에 저장
+              .collection('Token')
+              .doc('device1')
+              .set({'value': token});
+          print(ds.docs.length);
         }
       });
-    });
 
-    print("토큰 리스트 : $fireStoreTokenList");
+      await f //fireStore에 저장된 토큰 전부 가져오기
+          .collection("Token")
+          .get()
+          .then((QuerySnapshot ds) async {
+        ds.docs.forEach((doc) async {
+          if (ds.docs.length != 0) {
+            firesStoreToken = doc["value"];
+            fireStoreTokenList.add(firesStoreToken); //가져온 토큰 리스트에 저장
+          }
+        });
+      });
 
-    if (fireStoreTokenList.contains(token) == false) {
-      print("enter if");
-      await f //fireStore에 저장
-          .collection('Token')
-          .doc('device${fireStoreTokenList.length + 1}')
-          .set({'value': token});
+      print("토큰 리스트 : $fireStoreTokenList");
+
+      if (fireStoreTokenList.contains(token) == false) {
+        print("enter if");
+        await f //fireStore에 저장
+            .collection('Token')
+            .doc('device${fireStoreTokenList.length + 1}')
+            .set({'value': token});
+      }
     }
+    tokenCount = false;
   }
 
   //Dialog
@@ -411,7 +383,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: RaisedButton(
                                   elevation: 0.0,
                                   color: Colors.lightBlue,
-                                  onPressed: () {},
+                                  onPressed: grpc.receiveMessage,
                                   child: Center(
                                     child: Text(
                                       "Connect Server",
@@ -1132,7 +1104,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Column(
           children: [
             SizedBox(
-              height: screenHeight * 0.03,
+              //height: screenHeight * 0.03,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1157,7 +1129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       iconSize: 28.0,
                       color: Colors.white,
                       onPressed: () {
-                        grpc.sendSensor1();
+                        refreshSensor1();
                       },
                     ),
                   ],
@@ -1183,14 +1155,20 @@ class _HomeScreenState extends State<HomeScreen> {
   SliverToBoxAdapter _buildHeader(double screenHeight, double screenWidth) {
     return SliverToBoxAdapter(
       child: Container(
-        height: screenHeight * 0.035,
-        padding: const EdgeInsets.all(20.0),
+        height: screenHeight * 0.05,
+        padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
             color: Palette.primaryColor,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(45.0),
               bottomRight: Radius.circular(45.0),
             )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("데모실 환경",style: TextStyle(fontSize: 20,color: Colors.white),),
+          ],
+        ),
       ),
     );
   }
@@ -1215,6 +1193,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return SliverToBoxAdapter(
         child: Column(
       children: [
+        SizedBox(
+          height: screenHeight * 0.03,
+        ),
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -1225,6 +1206,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
                   fontSize: 25.0)),
+        ),
+        SizedBox(
+          height: screenHeight * 0.03,
         ),
         StaggeredGrid.count(
           crossAxisCount: 2,
@@ -1246,7 +1230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blueAccent)),
-                          Text('26°C',
+                          Text('${double.parse(temSparkLine.last.toStringAsFixed(2))}°C',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
@@ -1271,7 +1255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blueAccent)),
-                          Text('65%',
+                          Text('${double.parse(humSparkLine.last.toStringAsFixed(2))}%',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
@@ -1296,7 +1280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blueAccent)),
-                          Text('2LUX',
+                          Text('${double.parse(luxSparkLine.last.toStringAsFixed(0))}LUX',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
@@ -1321,7 +1305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.blueAccent)),
-                          Text('500ppm',
+                          Text('${double.parse(co2SparkLine.last.toStringAsFixed(0))}ppm',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
@@ -1339,37 +1323,132 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(12.0),
                 shadowColor: Color(0x802196F3),
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    padding: const EdgeInsets.all(24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('DB 그래프',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.blueAccent)),
-                            Text('265K',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 34.0))
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('평균 값',
+                                    style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.w600)),
+                                Stack(
+                                  children: [
+                                    Visibility(
+                                visible : averageInMap[0],
+                                      child: Text('$temTotalSparkLine°C',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 34.0)),
+                                    ),
+                                    Visibility(
+                                      visible : averageInMap[1],
+                                      child: Text('$humTotalSparkLine%',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 34.0)),
+                                    ),
+                                    Visibility(
+                                      visible : averageInMap[2],
+                                      child: Text('${co2TotalSparkLine}ppm',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 34.0)),
+                                    ),
+                                    Visibility(
+                                      visible : averageInMap[3],
+                                      child: Text('${luxTotalSparkLine}LUX',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 34.0)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            DropdownButton(
+                                isDense: true,
+                                value: actualDropdown,
+                                onChanged: (String value) => setState(() {
+                                  actualDropdown = value;
+                                  switch(value){
+                                    case "온도": functionBox.changeInAverageLists(0);
+                                    break;
+                                    case "습도": functionBox.changeInAverageLists(1);
+                                    break;
+                                    case "CO2": functionBox.changeInAverageLists(2);
+                                    break;
+                                    case "조도": functionBox.changeInAverageLists(3);
+                                    break;
+                                  }
+                                    }),
+                                items: chartDropdownItems.map((String title) {
+                                  return DropdownMenuItem(
+                                    value: title,
+                                    child: Text(title,
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15.0)),
+                                  );
+                                }).toList())
                           ],
                         ),
-                        Material(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(24.0),
-                            child: Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Icon(Icons.timeline,
-                                  color: Colors.white, size: 30.0),
-                            )))
-                      ]),
-                ),
+                        Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                        Stack(
+                          children: [
+                            Visibility(
+                              visible : averageInMap[0],
+                              child: Sparkline(
+
+                                data: temSparkLine,
+                                lineWidth: 5.0,
+                                lineColor: Colors.blueAccent,
+                              ),
+                            ),
+                            Visibility(
+                              visible : averageInMap[1],
+                              child: Sparkline(
+
+                                data: humSparkLine,
+                                lineWidth: 5.0,
+                                lineColor: Colors.blueAccent,
+                              ),
+                            ),
+                            Visibility(
+                              visible : averageInMap[2],
+                              child: Sparkline(
+
+                                data: co2SparkLine,
+                                lineWidth: 5.0,
+                                lineColor: Colors.blueAccent,
+                              ),
+                            ),
+                            Visibility(
+                              visible : averageInMap[3],
+                              child: Sparkline(
+
+                                data: luxSparkLine,
+                                lineWidth: 5.0,
+                                lineColor: Colors.blueAccent,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    )),
               ),
             )
           ],
@@ -1388,6 +1467,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.w600,
                   fontSize: 25.0)),
         ),
+        SizedBox(
+          height: screenHeight * 0.03,
+        ),
         StaggeredGrid.count(
           crossAxisCount: 2,
           crossAxisSpacing: 12.0,
@@ -1493,45 +1575,60 @@ class _HomeScreenState extends State<HomeScreen> {
                     ]),
               ),
             ),
-            StaggeredGridTile.count(
-                crossAxisCellCount: 2,
-                mainAxisCellCount: 1,
-                child: Material(
-                  elevation: 14.0,
-                  borderRadius: BorderRadius.circular(12.0),
-                  shadowColor: Color(0x802196F3),
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+            _buildTile(
+              Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('Revenue',
-                                        style: TextStyle(color: Colors.green)),
-                                    Text('\$16K',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 34.0)),
-                                  ],
-                                ),
-                                Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                                SfSparkLineChart(
-                                  data: [],
-                                  width: 5.0,
-                                )
-                              ]),
-                        ]),
-                  ),
-                ))
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('Revenue',
+                                  style: TextStyle(color: Colors.green)),
+                              Text('\$16K',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 34.0)),
+                            ],
+                          ),
+                          DropdownButton(
+                              isDense: true,
+                              value: actualDropdown,
+                              onChanged: (String value) => setState(() {
+                                    actualDropdown = value;
+                                    actualChart = chartDropdownItems
+                                        .indexOf(value); // Refresh the chart
+                                  }),
+                              items: chartDropdownItems.map((String title) {
+                                return DropdownMenuItem(
+                                  value: title,
+                                  child: Text(title,
+                                      style: TextStyle(
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14.0)),
+                                );
+                              }).toList())
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                      Sparkline(
+                        data: temSparkLine,
+                        lineWidth: 5.0,
+                        lineColor: Colors.greenAccent,
+                      )
+                    ],
+                  )),
+              //ontap
+            ),
           ],
         ),
       ],

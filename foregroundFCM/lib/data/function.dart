@@ -56,6 +56,14 @@ class FunctionBox {
     isCheckedMap.update(i, (value) => !value);
   }
 
+  void changeInAverageLists(int changeDataNumber) {
+    int i = changeDataNumber;
+    for (int j = 0; j < averageInMap.length; j++) {
+      averageInMap.update(j, (value) => false);
+    }
+    averageInMap.update(i, (value) => true);
+  }
+
   void readGatewayFunc() async {
     final prefs = await SharedPreferences.getInstance();
     saveGateway = prefs.getStringList("myGateway") ?? [""];

@@ -26,6 +26,14 @@ class ExProtoClient extends $grpc.Client {
       '/net_exchange.ExProto/MessageCmd',
       ($0.CmdMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.CmdMessage.fromBuffer(value));
+  static final _$exLink = $grpc.ClientMethod<$0.ExMessage, $0.ExMessage>(
+      '/net_exchange.ExProto/ExLink',
+      ($0.ExMessage value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ExMessage.fromBuffer(value));
+  static final _$influxDB = $grpc.ClientMethod<$0.RtuMessage, $0.RtuMessage>(
+      '/net_exchange.ExProto/influxDB',
+      ($0.RtuMessage value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.RtuMessage.fromBuffer(value));
   static final _$exClientstream =
       $grpc.ClientMethod<$0.RtuMessage, $0.RtuMessage>(
           '/net_exchange.ExProto/ExClientstream',
@@ -58,6 +66,17 @@ class ExProtoClient extends $grpc.Client {
       $async.Stream<$0.CmdMessage> request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$messageCmd, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.ExMessage> exLink($async.Stream<$0.ExMessage> request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$exLink, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.RtuMessage> influxDB(
+      $async.Stream<$0.RtuMessage> request,
+      {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$influxDB, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.RtuMessage> exClientstream($0.RtuMessage request,
@@ -98,6 +117,20 @@ abstract class ExProtoServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.CmdMessage.fromBuffer(value),
         ($0.CmdMessage value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.ExMessage, $0.ExMessage>(
+        'ExLink',
+        exLink,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.ExMessage.fromBuffer(value),
+        ($0.ExMessage value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RtuMessage, $0.RtuMessage>(
+        'influxDB',
+        influxDB,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.RtuMessage.fromBuffer(value),
+        ($0.RtuMessage value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.RtuMessage, $0.RtuMessage>(
         'ExClientstream',
         exClientstream_Pre,
@@ -130,6 +163,10 @@ abstract class ExProtoServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $async.Stream<$0.ExtMessage> request);
   $async.Stream<$0.CmdMessage> messageCmd(
       $grpc.ServiceCall call, $async.Stream<$0.CmdMessage> request);
+  $async.Stream<$0.ExMessage> exLink(
+      $grpc.ServiceCall call, $async.Stream<$0.ExMessage> request);
+  $async.Stream<$0.RtuMessage> influxDB(
+      $grpc.ServiceCall call, $async.Stream<$0.RtuMessage> request);
   $async.Future<$0.RtuMessage> exClientstream(
       $grpc.ServiceCall call, $0.RtuMessage request);
   $async.Stream<$0.RtuMessage> exServerstream(

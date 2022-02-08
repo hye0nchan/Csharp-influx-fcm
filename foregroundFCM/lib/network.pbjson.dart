@@ -30,12 +30,11 @@ const RtuMessage$json = const {
     const {'1': 'gw_id', '3': 3, '4': 1, '5': 13, '10': 'gwId'},
     const {'1': 'device_id', '3': 4, '4': 1, '5': 4, '10': 'deviceId'},
     const {'1': 'data_unit', '3': 5, '4': 1, '5': 12, '10': 'dataUnit'},
-    const {'1': 'sensor', '3': 6, '4': 1, '5': 13, '10': 'sensor'},
   ],
 };
 
 /// Descriptor for `RtuMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List rtuMessageDescriptor = $convert.base64Decode('CgpSdHVNZXNzYWdlEhgKB2NoYW5uZWwYASABKA1SB2NoYW5uZWwSJwoPc2VxdWVuY2VfbnVtYmVyGAIgASgNUg5zZXF1ZW5jZU51bWJlchITCgVnd19pZBgDIAEoDVIEZ3dJZBIbCglkZXZpY2VfaWQYBCABKARSCGRldmljZUlkEhsKCWRhdGFfdW5pdBgFIAEoDFIIZGF0YVVuaXQSFgoGc2Vuc29yGAYgASgNUgZzZW5zb3I=');
+final $typed_data.Uint8List rtuMessageDescriptor = $convert.base64Decode('CgpSdHVNZXNzYWdlEhgKB2NoYW5uZWwYASABKA1SB2NoYW5uZWwSJwoPc2VxdWVuY2VfbnVtYmVyGAIgASgNUg5zZXF1ZW5jZU51bWJlchITCgVnd19pZBgDIAEoDVIEZ3dJZBIbCglkZXZpY2VfaWQYBCABKARSCGRldmljZUlkEhsKCWRhdGFfdW5pdBgFIAEoDFIIZGF0YVVuaXQ=');
 @$core.Deprecated('Use extMessageDescriptor instead')
 const ExtMessage$json = const {
   '1': 'ExtMessage',

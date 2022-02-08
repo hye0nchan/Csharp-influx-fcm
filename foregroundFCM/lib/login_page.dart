@@ -47,13 +47,6 @@ class _LoginPageState extends State<LoginPage>{
                 value.isEmpty?'Password can\'t be empty' : null,
                 onSaved: (value) => _password = value,
               ),
-              new RaisedButton(
-                  child: new Text(
-                    'Login',
-                    style: new TextStyle(fontSize: 20.0),
-                  ),
-                  onPressed: validateAndSave,
-              )
             ],
           ),
         ),

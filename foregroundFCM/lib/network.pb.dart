@@ -106,7 +106,6 @@ class RtuMessage extends $pb.GeneratedMessage {
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gwId', $pb.PbFieldType.OU3)
     ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'deviceId', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..a<$core.List<$core.int>>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataUnit', $pb.PbFieldType.OY)
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sensor', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
 
@@ -117,7 +116,6 @@ class RtuMessage extends $pb.GeneratedMessage {
     $core.int? gwId,
     $fixnum.Int64? deviceId,
     $core.List<$core.int>? dataUnit,
-    $core.int? sensor,
   }) {
     final _result = create();
     if (channel != null) {
@@ -134,9 +132,6 @@ class RtuMessage extends $pb.GeneratedMessage {
     }
     if (dataUnit != null) {
       _result.dataUnit = dataUnit;
-    }
-    if (sensor != null) {
-      _result.sensor = sensor;
     }
     return _result;
   }
@@ -205,15 +200,6 @@ class RtuMessage extends $pb.GeneratedMessage {
   $core.bool hasDataUnit() => $_has(4);
   @$pb.TagNumber(5)
   void clearDataUnit() => clearField(5);
-
-  @$pb.TagNumber(6)
-  $core.int get sensor => $_getIZ(5);
-  @$pb.TagNumber(6)
-  set sensor($core.int v) { $_setUnsignedInt32(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasSensor() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearSensor() => clearField(6);
 }
 
 class ExtMessage extends $pb.GeneratedMessage {

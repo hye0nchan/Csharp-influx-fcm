@@ -1,8 +1,6 @@
 // ignore_for_file: unnecessary_statements
 
 import 'package:influxdb_client/api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fcm_notifications/widgets/stats_grid.dart';
 
 import 'data.dart';
 
@@ -13,6 +11,7 @@ class AddInfluxDB {
         .addField('value', tem1InfluxValue)
         .time(DateTime.now().toUtc());
     await writeApi.write(temperature1Influx);
+    temValue = tem1InfluxValue;
   }
 
   void tem2AddInfluxDB() async {

@@ -1,17 +1,11 @@
 import 'dart:async';
 import 'package:fcm_notifications/widgets/stats_grid.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:influxdb_client/api.dart';
-import 'package:fcm_notifications/widgets/stats_grid.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async{
-  await Firebase.initializeApp();
-  print('Handling a background Message ${message.messageId}');
-}
-
+var tokenCount = true;
 ////////////////////////////////////////////////////////////////////////////////
 // influxDB
 
@@ -249,6 +243,28 @@ List<List<ChartData>> sensorChartData = [
   coH3ChartData
 ];
 
+double temTotalSparkLine = 0;
+double humTotalSparkLine = 0;
+double co2TotalSparkLine = 0;
+double luxTotalSparkLine = 0;
+
+var totalTemCount = 0;
+var totalHumCount = 0;
+var totalCo2Count = 0;
+var totalLuxCount = 0;
+
+List<double> temSparkLine = [0];
+List<double> humSparkLine = [0];
+List<double> co2SparkLine = [0];
+List<double> luxSparkLine = [0];
+
+List<List<double>> sensorSparkLine = [
+  temSparkLine,
+  humSparkLine,
+  co2SparkLine,
+  luxSparkLine
+];
+
 List<String> sensorList = [
   "tem_1",
   "tem_2",
@@ -430,14 +446,14 @@ String statHolder = "Tem";
 
 String dropDownSelectedItem = "Tem";
 String recyclePeriod = "5s";
-int intRecyclePeriod = 5;
+int intRecyclePeriod = 10;
 String dateHolder = "Tem";
 String dateSelectedItem = "Tem";
 ////////////////////////////////////////////////////////////////////////////////
 //firestore
 
 List<String> fireStoreTokenList = [];
-String fireStoreIp = "test";
+String fireStoreIp = "172.28.96.1";
 ////////////////////////////////////////////////////////////////////////////////
 //Map
 Map<int, bool> isCheckedMap = {
@@ -478,6 +494,13 @@ Map<int, bool> visibilityMap = {
   4: false,
   5: false,
   6: false,
+};
+
+Map<int, bool> averageInMap = {
+  0: true,
+  1: false,
+  2: false,
+  3: false,
 };
 
 Map<int, bool> visibilityRefreshMap = {

@@ -1,7 +1,9 @@
+// ignore_for_file: unnecessary_statements
+
 import 'dart:async';
+import 'package:fcm_notifications/widgets/stats_grid.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:fcm_notifications/screens/home_screen.dart';
 import 'dart:typed_data';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +15,9 @@ import 'package:fcm_notifications/network.pb.dart';
 import 'package:fcm_notifications/screens/bottom_nav_screen.dart';
 import 'data/data.dart';
 import 'network.pbgrpc.dart';
+
+
+
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -46,7 +51,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  //FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
@@ -65,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    readInfluxDB();
     var initialzationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettings =
@@ -89,7 +95,6 @@ class _MyAppState extends State<MyApp> {
             ));
       }
     });
-    getToken();
   }
 
   @override
@@ -120,14 +125,7 @@ class _MyAppState extends State<MyApp> {
         ));
   }
 
-  getToken() async {
-    var token2 = await FirebaseMessaging.instance.getToken();
-    setState(() {
-      token = token;
-    });
-  }
 }
-
 
 String data;
 String gateway;
@@ -141,6 +139,77 @@ var request = RtuMessage();
 var response;
 final fireStore = FirebaseFirestore.instance;
 var device;
+
+void readInfluxDB() async {
+  print(readCount);
+  if (readCount) {
+    for (int i = 0; i < allSensorList.length; i++) {
+      var sensorStream = await queryService.query('''
+  from(bucket: "farmcare")
+  |> range(start: -24h)
+  |> filter(fn: (r) => r["_measurement"] == "${allSensorList[i]}")
+  |> yield(name: "mean")
+  ''');
+      await sensorStream.forEach((record) {
+        DateTime date = DateTime.parse(record['_time']);
+        var value = record['_value'];
+
+          if (i != 4 && value != 0) {
+            sensorChartData[i].add(ChartData(date, value));
+            if (i < 3 && i > 0) {
+
+              temSparkLine.add(value);
+              temTotalSparkLine += value;
+              totalTemCount += 1;
+
+            }
+            if (i < 6 && i > 2) {
+
+              humSparkLine.add(value);
+              humTotalSparkLine += value;
+              totalHumCount += 1;
+
+            }
+            if (i < 9 && i > 5) {
+
+              co2SparkLine.add(value);
+              co2TotalSparkLine += value;
+              totalCo2Count += 1;
+
+            }
+            if (i < 12 && i > 8) {
+
+              luxSparkLine.add(value);
+              luxTotalSparkLine += value;
+              totalLuxCount += 1;
+
+            }
+
+          }
+        });
+
+    }
+
+      temTotalSparkLine =
+          double.parse((temTotalSparkLine / totalTemCount).toStringAsFixed(2));
+      temSparkLine.removeAt(0);
+
+      humTotalSparkLine =
+          double.parse((humTotalSparkLine / totalHumCount).toStringAsFixed(2));
+      humSparkLine.removeAt(0);
+
+      co2TotalSparkLine =
+          double.parse((co2TotalSparkLine / totalCo2Count).toStringAsFixed(2));
+      co2SparkLine.removeAt(0);
+
+      luxTotalSparkLine =
+          double.parse((luxTotalSparkLine / totalLuxCount).toStringAsFixed(2));
+      luxSparkLine.removeAt(0);
+
+
+    readCount = false;
+  }
+}
 
 Future<ExMessage> receiveMessage() async {
   print("receive");
